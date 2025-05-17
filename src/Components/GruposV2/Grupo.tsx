@@ -133,7 +133,8 @@ const Grupo = () => {
           </ul>
         </nav>
       </div>
-      <div className="info-grupo">
+
+      <div className="info-grupo nuevo-estilo">
   <div className="header-grupo">
     <h4 className="titulo-principal">Información del Grupo</h4>
   </div>
@@ -147,26 +148,26 @@ const Grupo = () => {
         <h5 className="nombre-grupo">{grupo.Nombre}</h5>
         {grupo.Rol === "profesor" && (
           <button
-  className="boton boton-crear"
-  onClick={() => navigate(`/InsertarTarea/${idUsuario}/${idGrupo}`)}
->
-  <IoIosAddCircle />
-  Crear Tarea
-</button>
-
+            className="boton boton-crear"
+            onClick={() => navigate(`/InsertarTarea/${idUsuario}/${idGrupo}`)}
+          >
+            <IoIosAddCircle />
+            Crear Tarea
+          </button>
         )}
       </div>
 
-      <div className="lado-derecho">
-        <h6 className="Sub-titulo">Tareas:</h6>
+      <div className="lado-derecho animado fade-in">
+        <h6 className="sub-titulo">Tareas:</h6>
         <div className="tasks-grid">
           {grupo.Tareas.map((tarea) => (
-            <div key={tarea.IdTarea} className="task-card">
+            <div key={tarea.IdTarea} className="task-card slide-in-bottom">
               <div className="task-header">
                 <h3>{tarea.Titulo}</h3>
                 <div className="task-points">{tarea.ValorMax} pts</div>
               </div>
               <p className="task-description">{tarea.Descripcion}</p>
+
               {grupo.Rol === "estudiante" && (
                 <>
                   <p><b>Calificación:</b> {tarea.Calificacion ?? "Sin calificar"}</p>
@@ -182,24 +183,28 @@ const Grupo = () => {
                   </button>
                 </>
               )}
+
               {grupo.Rol === "profesor" && (
                 <div className="acciones-tarea">
-                    <button
-               onClick={() => navigate(`/ActualizarTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)}
-              className="boton boton-actualizar"
-          >
-                <img src="/Iconos/Icono-Insertar.svg" alt="Actualizar" />
-                 Actualizar Tarea
-                </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/ActualizarTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
+                    }
+                    className="boton boton-actualizar"
+                  >
+                    <img src="/Iconos/Icono-Insertar.svg" alt="Actualizar" />
+                    Actualizar Tarea
+                  </button>
 
                   <button
-                  onClick={() => navigate(`/TareaAlumnos/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)}
-                  className="boton boton-ver"
-                >
-                  <img src="/Iconos/Icono-Ver.svg" alt="Ver" />
-                  Ver Tarea
-                </button>
-
+                    onClick={() =>
+                      navigate(`/TareaAlumnos/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
+                    }
+                    className="boton boton-ver"
+                  >
+                    <img src="/Iconos/Icono-Ver.svg" alt="Ver" />
+                    Ver Tarea
+                  </button>
                 </div>
               )}
             </div>
@@ -209,8 +214,14 @@ const Grupo = () => {
     </div>
   )}
 
-  {!cargando && !grupo && <p>No se encontró información del grupo.</p>}
+  {cargando && (
+  <div className="loader-container">
+    <div className="loader"></div>
+  </div>
+)}
+
 </div>
+
     </>
   );
 };

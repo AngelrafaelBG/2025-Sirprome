@@ -1,0 +1,230 @@
+/* Estilos generales */
+#main {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Fondo del contenedor */
+.fondo-comentario {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.fondo-comentario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Contenedor principal */
+.contenedor-comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Título */
+.titulo-comentario {
+  color: #2b2d42;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.titulo-comentario::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #4361ee, #3a0ca3);
+  border-radius: 3px;
+}
+
+/* Etiqueta */
+.arreglo-subir {
+  color: #495057;
+  font-weight: 500;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Área de texto */
+.introducir-comentario {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 150px;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.introducir-comentario:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+  outline: none;
+}
+
+.introducir-comentario::placeholder {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* Botón */
+.criterio-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.criterio-boton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.criterio-boton:hover {
+  background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(58, 12, 163, 0.3);
+}
+
+.criterio-boton:hover::before {
+  left: 100%;
+}
+
+.criterio-boton:active {
+  transform: translateY(0);
+}
+
+.criterio-boton:disabled {
+  background: #adb5bd;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Imagen del botón */
+.imagen-subir {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.criterio-boton:hover .imagen-subir {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Animación de carga */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.criterio-boton:disabled {
+  animation: pulse 1.5s infinite;
+}
+
+/* Efecto de onda al hacer clic */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.criterio-boton:not(:disabled):active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fondo-comentario {
+    padding: 25px;
+  }
+  
+  .titulo-comentario {
+    font-size: 1.5rem;
+  }
+  
+  .introducir-comentario {
+    min-height: 120px;
+  }
+  
+  .criterio-boton {
+    padding: 10px 25px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fondo-comentario {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .titulo-comentario {
+    font-size: 1.3rem;
+  }
+  
+  .arreglo-subir {
+    font-size: 1rem;
+  }
+  
+  .introducir-comentario {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+  
+  .criterio-boton {
+    width: 100%;
+  }
+}

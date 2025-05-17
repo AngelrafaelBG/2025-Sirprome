@@ -124,6 +124,7 @@ const InsertarCriterios = () => {
           </ul>
         </nav>
       </div>
+      
       <main id="main">
         <div className="fondo-criterios">
           <div className="contenedor-criterios">

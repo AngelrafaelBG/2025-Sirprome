@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../assets/Barra_Lateral.css";
-import "../../assets/Estilos.css";
+import "../../assets/Comentario.css";
 
 
 const InsertarComentario = () => {
@@ -118,6 +118,7 @@ const InsertarComentario = () => {
           </ul>
         </nav>
       </div>
+
       <main id="main">
     <div className="fondo-comentario">
       <div className="contenedor-comentario">

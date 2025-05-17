@@ -3,9 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GoChecklist } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import { IoIosAddCircle } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/verGrupos.css";
 
@@ -193,7 +190,7 @@ const VerGrupos = () => {
                         <span className="Icono_Criterio_Grupos">
                           <FaEdit style={{ fontSize: "20px" }} />
                         </span>
-                        Criterio
+                        Graficas
                       </button>
                     </div>
                   </div>
@@ -201,7 +198,7 @@ const VerGrupos = () => {
               ))}
             </ul>
           ) : (
-            <p>No hay grupos disponibles.</p>
+            <p>Cargando los Grupos Porfavor espere.</p>
           )}
         </div>
       </div>

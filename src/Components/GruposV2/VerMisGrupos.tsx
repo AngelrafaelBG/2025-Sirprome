@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IoPeopleSharp } from "react-icons/io5";
 import { GoChecklist } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
 import { IoIosInformationCircleOutline } from "react-icons/io";

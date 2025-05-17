@@ -1,0 +1,197 @@
+.contenedor-alumno {
+          background: #ffffff;
+          border-radius: 12px;
+          width: 100%;
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 30px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          border: 1px solid #e2e8f0;
+        }
+
+        .contenedor-alumno1 {
+          margin-bottom: 25px;
+        }
+
+        .input-criterioalumnos {
+          width: 100%;
+          padding: 12px 15px;
+          margin-bottom: 20px;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          font-size: 1rem;
+          background-color: #f8fafc;
+        }
+
+        .input-criterioalumnos:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .error {
+          color: #ef4444;
+          padding: 10px;
+          background-color: #fee2e2;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+
+        .student-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .student-info {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .student-avatar {
+          width: 60px;
+          height: 60px;
+          background-color: #3b82f6;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 1.2rem;
+          box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+        }
+
+        .student-name {
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+
+        .student-average {
+          background: #f8fafc;
+          padding: 10px 15px;
+          border-radius: 20px;
+          font-weight: 600;
+          color: #2563eb;
+        }
+
+        .evaluation-container {
+          display: flex;
+          gap: 25px;
+          margin-bottom: 25px;
+          flex-wrap: wrap;
+        }
+
+        .criteria-grid {
+          flex: 1;
+          min-width: 300px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+        }
+
+        .criteria-item {
+          background: #f8fafc;
+          padding: 16px;
+          border-radius: 8px;
+          border-left: 4px solid #3b82f6;
+          min-height: 100px;
+        }
+
+        .criteria-label {
+          font-size: 0.85rem;
+          color: #64748b;
+          margin-bottom: 8px;
+          font-weight: 500;
+        }
+
+        .criteria-value {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #2563eb;
+        }
+
+        .chart-container {
+          flex: 1;
+          min-width: 300px;
+          height: 350px;
+          position: relative;
+        }
+
+        .chart-title {
+          text-align: center;
+          margin-bottom: 10px;
+          color: #2563eb;
+          font-weight: 600;
+        }
+
+        .comments-section {
+          background: #f8fafc;
+          padding: 20px;
+          border-radius: 8px;
+          margin-top: 25px;
+          width: 100%;
+        }
+
+        .comments-title {
+          color: #2563eb;
+          margin-bottom: 12px;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+
+        .no-comments {
+          color: #64748b;
+          font-style: italic;
+          text-align: center;
+          padding: 10px;
+        }
+
+        .boton-criterios {
+          width: 100%;
+          padding: 12px;
+          background: #3b82f6;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-top: 20px;
+          cursor: pointer;
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
+
+        .boton-criterios:hover {
+          background: #2563eb;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+
+        .imagen-subir {
+          width: 20px;
+          height: 20px;
+          filter: brightness(0) invert(1);
+        }
+
+        @media (max-width: 768px) {
+          .criteria-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .student-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          
+          .chart-container {
+            height: 300px;
+          }
+        }

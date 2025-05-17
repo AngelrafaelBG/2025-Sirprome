@@ -1,199 +1,202 @@
-:root {
-  --color-primario: #138496;
-  --color-primario-hover: #0e6d7a;
-  --color-secundario: #17a2b8;
-  --color-fondo: #f8f9fa;
-  --color-texto: #495057;
-  --color-borde: #dee2e6;
-}
-
-body {
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-}
-
-.fondo-ver {
-  padding: 2rem 1rem;
-}
-
 .contenedor-ver {
-  max-width: 1200px;
+  width: min(100% - 2rem, 1200px);
   margin: 0 auto;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 0.5s ease;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
 }
 
-h4 {
-  color: var(--color-primario);
-  margin-bottom: 1.5rem;
-  font-size: 1.75rem;
-  font-weight: 600;
+.contenedor-ver h4 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f2f5;
   position: relative;
-  padding-bottom: 0.75rem;
 }
 
-h4::after {
+.contenedor-ver h4::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 4px;
-  background-color: var(--color-primario);
-  border-radius: 2px;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #3498db;
+}
+
+/* Mensajes de estado */
+.contenedor-ver > p {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  padding: 1rem;
 }
 
 .error {
-  color: #dc3545;
-  background-color: #f8d7da;
-  padding: 0.75rem;
-  border-radius: 6px;
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #e74c3c;
+  text-align: center;
   margin: 1rem 0;
-  border: 1px solid #f5c6cb;
 }
 
 /* Lista de grupos */
 .Contenedor_Imagen_MisGrupos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  list-style: none;
+  grid-template-columns: repeat(3, 2fr); 
+  gap: 2rem;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
-.Contenedor_Grupos_IdGrupo {
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--color-borde);
+/* Tarjeta de grupo */
+.Contenedor_Grupos_IdGrupo img {
+  width: clamp(150px, 80%, 200px);
+  height: auto; 
+  object-fit: contain; 
+  margin: 0 auto;
+  display: block;
+  padding-top: 1rem; 
+}
+
+
+.Contenedor_Grupos_IdGrupo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+
+.Contenedor_Grupos_IdGrupo img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+
+.Titulo_Grupo {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.contenido-grupo {
+  padding: 1.5rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.Contenedor_Grupos_IdGrupo:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-}
-
-.Titulo_Grupo {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-  padding: 1rem;
-  margin: 0;
-  background-color: var(--color-primario);
-  text-align: center;
-}
-
-.Contenedor_Grupos_IdGrupo img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-bottom: 1px solid var(--color-borde);
-}
-
-/* Contenido dentro del grupo */
 .Miembros_MisGrupos {
+  margin: 0.5rem 0 1rem;
+  color: #555;
+  font-size: 1rem;
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  background-color: rgba(248, 249, 250, 0.8);
-  border-radius: 6px;
 }
 
 .Icono_Miembro_Grupos {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #7f8c8d;
 }
 
-.botones-grupo,
-.Union_Criterio_Miembros {
+/* Botones */
+.botones-grupo {
   display: flex;
   gap: 0.75rem;
   margin-top: auto;
-  flex-wrap: wrap;
+  padding-top: 1rem;
 }
 
-.Boton_Ver_Detalle,
+.Boton_Ver_Detalle, 
 .Boton_Criterio_Grupo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
+  flex: 1;
+  padding: 0.75rem;
   border: none;
   border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  flex-grow: 1;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
 .Boton_Ver_Detalle {
-  background-color: var(--color-primario);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
   color: white;
 }
 
 .Boton_Ver_Detalle:hover {
-  background-color: var(--color-primario-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
 }
 
 .Boton_Criterio_Grupo {
-  background-color: white;
-  color: var(--color-primario);
-  border: 1px solid var(--color-primario);
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
 }
 
 .Boton_Criterio_Grupo:hover {
-  background-color: rgba(19, 132, 150, 0.1);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
 }
 
+/* Iconos */
 .Icono_Detalle,
 .Icono_Criterio_Grupos {
-  margin-right: 0.5rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
+  .contenedor-ver {
+    padding: 1.5rem;
+  }
+  
   .Contenedor_Imagen_MisGrupos {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    max-width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
+  .contenedor-ver {
+    padding: 1rem;
+  }
+  
   .Contenedor_Imagen_MisGrupos {
     grid-template-columns: 1fr;
   }
-
-  .botones-grupo,
-  .Union_Criterio_Miembros {
+  
+  .botones-grupo {
     flex-direction: column;
-    gap: 0.5rem;
+  }
+  
+  .Boton_Ver_Detalle,
+  .Boton_Criterio_Grupo {
+    width: 100%;
   }
 }

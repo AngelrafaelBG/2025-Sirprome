@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import "../../assets/CriterioAlumno.css";
 import {
   RadarChart,
   Radar,
@@ -21,7 +22,7 @@ interface CriterioAlumnos {
 }
 
 interface Grupo {
-  IdProfesor:string,
+  IdProfesor: string;
   Nombre: string;
   Imagen: string;
 }
@@ -78,6 +79,7 @@ const CriterioAlumno = () => {
 
     fetchCriteriosAlumno();
   }, [id, idGrupo]);
+
   useEffect(() => {
     const menu = document.getElementById("menu");
     const barra = document.getElementById("barra");
@@ -108,9 +110,7 @@ const CriterioAlumno = () => {
     setCarga(true);
   
     try {
-  
       const url = `http://localhost:4100/EliminarComentario/${grupo?.IdProfesor}/${idGrupo}/${idComentario}`;
-  
       const res = await fetch(url, { method: "POST" });
   
       if (!res.ok) {
@@ -120,7 +120,6 @@ const CriterioAlumno = () => {
   
       alert("Comentario eliminado con éxito.");
   
-      // Actualizar el estado eliminando el comentario del criterio correspondiente
       setCriteriosAlumnos((prev) =>
         prev.map((criterio) =>
           criterio.IdCriterio === idCriterio
@@ -139,30 +138,27 @@ const CriterioAlumno = () => {
       setCarga(false);
     }
   };
-  
-  
 
   return (
     <>
-    <header>
+      <header>
         <div className="izq">
           <div className="menu-conteiner">
             <div className="menu" id="menu">
-            <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
+              <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
             </div>
           </div>
           <div className="brand">
-            
             <span className="uno">Sirprome</span>
           </div>
         </div>
-        
       </header>
+      
       <div className="barra-lateral" id="barra">
         <nav>
           <ul>
-          <li>
-              <a  onClick={() => navigate(`/VerGrupos/${id}`)} className="Buscar">
+            <li>
+              <a onClick={() => navigate(`/VerGrupos/${id}`)} className="Buscar">
                 <img src="/Iconos/Icono-Contenido.svg" alt="" />
                 <span>Grupos Estudiante</span>
               </a>
@@ -185,108 +181,125 @@ const CriterioAlumno = () => {
                 <span>Cerrar Sesion</span>
               </a>
             </li>
-            
           </ul>
         </nav>
       </div>
-      <main id="main">
-    <div className="contenedor-alumno">
-    <div className="contenedor-alumno1">
-      {carga && <p>Cargando información...</p>}
-      {error && <p className="error">{error}</p>}
-      <div>
-        <input className="input-criterioalumnos"
-          type="text"
-          placeholder="Buscar por nombre de alumno..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-      </div>
-      {grupo && (
-        <div>
-          <h3>{grupo.Nombre}</h3>
-          <img src={grupo.Imagen} alt={grupo.Nombre} width="100" height="100" />
-        </div>
-      )}
-
       
+      <main id="main">
+        <div className="contenedor-alumno">
+          <div className="contenedor-alumno1">
+            {carga && <p>Cargando información...</p>}
+            {error && <p className="error">{error}</p>}
+            
+            <input 
+              className="input-criterioalumnos"
+              type="text"
+              placeholder="Buscar por nombre de alumno..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
 
-      <h4>Criterios de los Alumnos</h4>
-      </div>
-      <ul>
-  {criteriosFiltrados.length > 0 ? (
-    criteriosFiltrados.map((criterio, index) => {
-      const datosRadar = criterio.Criterios.map((c, idx) => ({
-        criterio: c,
-        valor: criterio.Evaluacion[idx],
-      }));
-
-      return (
-        <li key={index}>
-          <p>
-            <b>{criterio.Alumno}</b>
-          </p>
-          <p>Criterio: {criterio.Criterios.join(", ")}</p>
-          {/* Chequeo explícito de grupo y su propiedad IdProfesor */}
-          <p>Valor: {criterio.Valor.join(", ")}</p>
-          <p>Evaluación: {criterio.Evaluacion.join(", ")}</p>
-          <div className="comentarios">
-            {criterio.ComentariosRecibidos.length > 0 ? (
-              <ul>
-                {criterio.ComentariosRecibidos.map((comentario) => (
-                  <li key={comentario.EscritoPor}>
-                    <p><b>Comentario:</b> {comentario.Comentario}</p>
-                    <button
-                      onClick={() => EliminarComentario(comentario.Id, criterio.IdCriterio)} 
-                       className="boton-criterios boton-subir"
-                    >
-                      Eliminar Comentario
-                      <MdDelete style={{ fontSize: "40px" }} />
-                    </button>
-                  </li>
-                ))}
-                  </ul>
-            ) : (
-              <p>No hay comentarios recibidos.</p>
+            {grupo && (
+              <div className="student-header">
+                <div className="student-info">
+                  <div className="student-avatar">
+                    {grupo.Nombre.charAt(0)}
+                  </div>
+                  <div>
+                    <h3>{grupo.Nombre}</h3>
+                    <div className="student-name">
+                      {criteriosFiltrados.length > 0 ? criteriosFiltrados[0].Alumno : "Alumno"}
+                    </div>
+                  </div>
+                </div>
+                <div className="student-average">
+                  Promedio: {criteriosFiltrados.length > 0 ? 
+                    (criteriosFiltrados[0].Evaluacion.reduce((a, b) => a + b, 0) / 
+                     criteriosFiltrados[0].Evaluacion.length).toFixed(1) : "0"}/10
+                </div>
+              </div>
             )}
+
+            <h4>Criterios de los Alumnos</h4>
           </div>
-          <button
-            onClick={() => navigate(`/InsertarComentario/${grupo?.IdProfesor}/${idGrupo}/${id}`)}
-            className="boton-criterios boton-subir"
-          >
-            Enviar Comentario
-            <img src="/Iconos/Icono-Comentario.svg" className="imagen-subir" />
-          </button>
 
-          {datosRadar.length > 0 && (
-            <div style={{ width: "100%", height: 300 }}>
-              <h1>Gráfica de Evaluación</h1>
-              <ResponsiveContainer>
-                <RadarChart data={datosRadar}>
-                  <PolarGrid />
-                  <PolarAngleAxis dataKey="criterio" />
-                  <PolarRadiusAxis />
-                  <Radar
-                    name={criterio.Alumno}
-                    dataKey="valor"
-                    stroke="#8884d7"
-                    fill="#8884d8"
-                    fillOpacity={0.5}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
+          {criteriosFiltrados.length > 0 ? (
+            criteriosFiltrados.map((criterio, index) => {
+              const datosRadar = criterio.Criterios.map((c, idx) => ({
+                criterio: c,
+                valor: criterio.Evaluacion[idx],
+              }));
+
+              return (
+                <div key={index} className="evaluation-container">
+                  <div className="criteria-grid">
+                    {criterio.Criterios.map((criterioName, idx) => (
+                      <div key={idx} className="criteria-item">
+                        <div className="criteria-label">{criterioName}</div>
+                        <div className="criteria-value">
+                          {criterio.Evaluacion[idx]}/10
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {datosRadar.length > 0 && (
+                    <div className="chart-container">
+                      <h3 className="chart-title">Gráfica de Evaluación</h3>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart data={datosRadar}>
+                          <PolarGrid />
+                          <PolarAngleAxis dataKey="criterio" />
+                          <PolarRadiusAxis />
+                          <Radar
+                            name={criterio.Alumno}
+                            dataKey="valor"
+                            stroke="#8884d7"
+                            fill="#8884d8"
+                            fillOpacity={0.5}
+                          />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  )}
+
+                  <div className="comments-section">
+                    <div className="comments-title">Comentarios del Instructor</div>
+                    {criterio.ComentariosRecibidos.length > 0 ? (
+                      <ul>
+                        {criterio.ComentariosRecibidos.map((comentario) => (
+                          <li key={comentario.EscritoPor}>
+                            <p><b>Comentario:</b> {comentario.Comentario}</p>
+                            <button
+                              onClick={() => EliminarComentario(comentario.Id, criterio.IdCriterio)} 
+                              className="boton-criterios boton-subir"
+                            >
+                              Eliminar Comentario
+                              <MdDelete style={{ fontSize: "20px" }} />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="no-comments">No hay comentarios registrados para este período</p>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => navigate(`/InsertarComentario/${grupo?.IdProfesor}/${idGrupo}/${id}`)}
+                    className="boton-criterios boton-subir"
+                  >
+                    Enviar Comentario
+                    <img src="/Iconos/Icono-Comentario.svg" className="imagen-subir" />
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <p>No existen criterios que coincidan con la búsqueda.</p>
           )}
-        </li>
-      );
-    })
-  ) : (
-    <p>No existen criterios que coincidan con la búsqueda.</p>
-  )}
-</ul>
-
-    </div>
-    </main>
+        </div>
+      </main>
     </>
   );
 };
