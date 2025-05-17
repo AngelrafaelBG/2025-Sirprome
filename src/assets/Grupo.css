@@ -1,0 +1,202 @@
+/* Título principal ("Información del Grupo") */
+.titulo-principal {
+  font-size: 1.6rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Nombre del grupo ("Los Perdidos") */
+.nombre-grupo {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0c2e47;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+/* Contenedor general */
+.info-grupo {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.1);
+}
+
+/* Contenedor que separa izquierda/derecha */
+.contenido-grupo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Lados */
+.lado-izquierdo {
+  flex: 1;
+  min-width: 250px;
+}
+
+.lado-derecho {
+  flex: 2;
+  min-width: 300px;
+}
+
+/* GRID de tareas */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Tarjeta individual */
+.task-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 4px solid var(--primary-color);
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.task-header h3 {
+  font-size: 1.3rem;
+  color: var(--dark-color);
+}
+
+.task-points {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.task-description {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+/* Botones */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Crear Tarea */
+.boton-crear {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.boton-crear:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+/* Actualizar Tarea */
+.boton-actualizar {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.boton-actualizar:hover {
+  background-color: #138496;
+  transform: translateY(-2px);
+}
+
+/* Ver Tarea */
+.boton-ver {
+  background-color: var(--accent-color);
+  color: black;
+}
+
+.boton-ver:hover {
+  background-color: #e74c70;
+  transform: translateY(-2px);
+}
+
+/* Iconos dentro del botón */
+.boton img, .boton svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Crear Tarea - más alineado */
+.Boton_Crear_Tarea {
+  margin-left: 0;
+  margin-top: 15px;
+}
+
+/* Ajuste responsive */
+@media (max-width: 1024px) {
+  .nombre-grupo {
+    font-size: 2rem;
+  }
+
+  .titulo-principal {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contenido-grupo {
+    flex-direction: column;
+  }
+
+  .lado-izquierdo, .lado-derecho {
+    width: 100%;
+  }
+
+  .imagen-grupo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .tasks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .tasks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nombre-grupo {
+    font-size: 1.7rem;
+  }
+
+  .titulo-principal {
+    font-size: 1.2rem;
+  }
+}

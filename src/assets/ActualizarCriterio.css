@@ -1,0 +1,104 @@
+/* Contenedor principal */
+#main {
+  background-color: #f4f8fb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeInSlide 0.6s ease;
+}
+
+/* Tarjeta */
+.fondo-criterios {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1.5rem;
+  max-width: 520px;
+  width: 100%;
+  animation: fadeInSlide 0.8s ease;
+}
+
+/* Título */
+.titulo-criterios {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Grupo de campo */
+.contenedor-criterio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.contenedor-criterio label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #2c3e50;
+}
+
+/* Inputs */
+.input-criterio {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #ccd6dd;
+  border-radius: 7px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.input-criterio:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Botón */
+.criterio-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.criterio-boton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(52, 152, 219, 0.25);
+}
+
+.criterio-boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ícono */
+.imagen-subir {
+  width: 18px;
+  height: 18px;
+}
+
+/* Animación */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,47 @@
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: xx-large;   
+}
+.contenido1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25rem;
+    border: solid black 2px;
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: 3px 3px 3px 3px#9e9e9e;
+}
+.Logo{
+    width: 200px;
+    margin-top: 1rem;
+}
+input{
+    margin-bottom: 4rem;
+    background-color: #c0c0c0;
+    font-weight: 600;
+    padding: 7px;
+    border-radius: 11px;
+    scale: 170%;
+}
+.linkBoton{
+    color: #5fafd4;
+}
+.Enter{
+    background-color: black;
+    color: white;
+    width: 55%;
+    border-radius: 15px 15px 15px 15px;
+    font-size: x-large;
+    padding: .6rem;
+}
+.Pregunta{
+    font-size: large;
+    margin-bottom: 1rem;
+}

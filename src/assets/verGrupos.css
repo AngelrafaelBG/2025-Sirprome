@@ -1,0 +1,199 @@
+:root {
+  --color-primario: #138496;
+  --color-primario-hover: #0e6d7a;
+  --color-secundario: #17a2b8;
+  --color-fondo: #f8f9fa;
+  --color-texto: #495057;
+  --color-borde: #dee2e6;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+.fondo-ver {
+  padding: 2rem 1rem;
+}
+
+.contenedor-ver {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease;
+}
+
+h4 {
+  color: var(--color-primario);
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-primario);
+  border-radius: 2px;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border: 1px solid #f5c6cb;
+}
+
+/* Lista de grupos */
+.Contenedor_Imagen_MisGrupos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Contenedor_Grupos_IdGrupo {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--color-borde);
+  display: flex;
+  flex-direction: column;
+}
+
+.Contenedor_Grupos_IdGrupo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.Titulo_Grupo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  padding: 1rem;
+  margin: 0;
+  background-color: var(--color-primario);
+  text-align: center;
+}
+
+.Contenedor_Grupos_IdGrupo img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+/* Contenido dentro del grupo */
+.Miembros_MisGrupos {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  background-color: rgba(248, 249, 250, 0.8);
+  border-radius: 6px;
+}
+
+.Icono_Miembro_Grupos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.botones-grupo,
+.Union_Criterio_Miembros {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.Boton_Ver_Detalle,
+.Boton_Criterio_Grupo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  flex-grow: 1;
+}
+
+.Boton_Ver_Detalle {
+  background-color: var(--color-primario);
+  color: white;
+}
+
+.Boton_Ver_Detalle:hover {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-2px);
+}
+
+.Boton_Criterio_Grupo {
+  background-color: white;
+  color: var(--color-primario);
+  border: 1px solid var(--color-primario);
+}
+
+.Boton_Criterio_Grupo:hover {
+  background-color: rgba(19, 132, 150, 0.1);
+  transform: translateY(-2px);
+}
+
+.Icono_Detalle,
+.Icono_Criterio_Grupos {
+  margin-right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .Contenedor_Imagen_MisGrupos {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .Contenedor_Imagen_MisGrupos {
+    grid-template-columns: 1fr;
+  }
+
+  .botones-grupo,
+  .Union_Criterio_Miembros {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
