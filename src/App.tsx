@@ -42,7 +42,7 @@ import TareaAlumno from "./Components/Tareas/TareasAlumno";
 import TareaAlumnos from "./Components/Tareas/TareaAlumnos";
 import CriterioGrupo from "./Components/Criterios/CriterioGrupo";
 import InsertarComentario from "./Components/Comentarios.tsx/Comentarios";
-
+import Logros from "./Components/Logros/Logros";
 
 function App() {
   return (
@@ -85,7 +85,8 @@ function App() {
         <Route path="/ActualizarTarea/:idProfesor/:idGrupo/:idTarea" element={<ActualizarTarea />} />
         <Route path="/SubirTarea/:idUsuario/:idGrupo/:idTarea" element={<SubirTarea />} />
         <Route path="/CalificarTarea/:idProfesor/:idGrupo/:idTarea/:idUsuario" element={<CalificarTarea />} />
-
+        {/* MODULO DE LOGROS*/}
+        <Route path="/logros/:idUsuario" element={<Logros />} />
         {/* MÓDULO ELIMINACIONES */}
         <Route path="/EliminarComentario/:idProfesor/:idGrupo/:idComentario" element={<EliminarComentarios />} />
         <Route path="/EliminarGrupo/:idProfesor/:idGrupo" element={<EliminarGrupo />} />

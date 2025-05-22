@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../../assets/Barra_Lateral.css";
-import "../../assets/criterioGrupo.css";
+
 const CriterioGrupo = () => {
   const { idProfesor, idGrupo } = useParams();
   const navigate = useNavigate();
@@ -92,8 +91,7 @@ const CriterioGrupo = () => {
     }
   };
 
-    
-     return (
+  return (
     <>
     <header>
         <div className="izq">
@@ -103,11 +101,11 @@ const CriterioGrupo = () => {
             </div>
           </div>
           <div className="brand">
-           
+            
             <span className="uno">Sirprome</span>
           </div>
         </div>
-       
+        
       </header>
       <div className="barra-lateral" id="barra">
         <nav>
@@ -133,68 +131,46 @@ const CriterioGrupo = () => {
           </ul>
         </nav>
       </div>
+      
       <main id="main">
-        <div className="info-grupo">
-          {carga && <div className="carga">Cargando información...</div>}
-          {error && <div className="error-message">{error}</div>}
+    <div className="info-grupo">
+      {carga && <p>Cargando información...</p>}
+      {error && <p className="error">{error}</p>}
 
-          {!carga && !error && grupo && (
-            <div className="grupo-header">
-              <h1 className="grupo-titulo">
-                <span className="grupo-nombre">{grupo.Nombre}</span>
-                <span className="grupo-subtitulo">Criterios de Evaluación</span>
-              </h1>
-              <div className="decorative-line"></div>
-            </div>
-          )}
-
-          <div className="criterios-container">
-            {criterios.length > 0 ? (
-              <div className="criterios-lista">
-                {criterios.map((criterio) => (
-                  <div key={criterio.IdCriterio} className="criterio-item">
-                    <div className="criterio-contenido">
-                      <h3 className="criterio-nombre">
-                        {criterio.Criterio.join(", ")}
-                      </h3>
-                      <p className="criterio-valor">
-                        <span className="valor-label">Valores:</span> 
-                        {criterio.Valor.join(", ")}
-                      </p>
-                    </div>
-                    <div className="criterio-acciones">
-                      <button
-                        className="boton-accion boton-actualizar"
-                        onClick={() => navigate(`/ActualizarCriterio/${idProfesor}/${idGrupo}/${criterio.IdCriterio}`)}
-                      >
-                        <img src="/Iconos/Icono-Insertar.svg" alt="Actualizar" className="icono-accion" />
-                        <span>Editar</span>
-                      </button>
-                      <button
-                        className="boton-accion boton-eliminar"
-                        onClick={() => eliminarCriterio(criterio.Criterio.join(", "), criterio.IdCriterio)}
-                      >
-                        <img src="/Iconos/Icono-Eliminar.svg" alt="Eliminar" className="icono-accion" />
-                        <span>Eliminar</span>
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              !carga && <div className="sin-criterios">
-                <p>No se han definido criterios para este grupo</p>
-                <button 
-                  className="boton-primario"
-                  onClick={() => navigate(`/AgregarCriterio/${idProfesor}/${idGrupo}`)}
-                >
-                  Agregar Primer Criterio
-                </button>
-              </div>
-            )}
-          </div>
+      {!carga && !error && grupo && (
+        <div className="grupo-info">
+          <h3>{grupo.Nombre}</h3>
+          <img src={grupo.Imagen} alt={grupo.Nombre} width="300" height="300" />
         </div>
-      </main>
+      )}
+
+      <ul>
+        <h4>Criterios del Grupo:</h4>
+        {criterios.length > 0 ? (
+          criterios.map((criterio) => (
+            <li key={criterio.IdCriterio}>
+              <p><b>{criterio.Criterio.join(", ")}</b></p>
+              <p>{criterio.Valor.join(", ")}</p>
+              <button
+                className="boton-criterios boton-subir"
+                onClick={() => navigate(`/ActualizarCriterio/${idProfesor}/${idGrupo}/${criterio.IdCriterio}`)}
+              >
+                Actualizar Criterio<img src="/Iconos/Icono-Insertar.svg" className="imagen-subir" />
+              </button>
+              <button
+                className="boton-criterios boton-subir"
+                onClick={() => navigate(`/EliminarCriterio/${idProfesor}/${idGrupo}/${criterio.IdCriterio}`)}
+              >
+                Eliminar Criterio<img src="/Iconos/Icono-Eliminar.svg" className="imagen-subir" />
+              </button>
+            </li>
+          ))
+        ) : (
+          <p>No existen criterios en este grupo.</p>
+        )}
+      </ul>
+    </div>
+    </main>
     </>
   );
 };

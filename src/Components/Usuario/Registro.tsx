@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Registrar = () => {
   const navigate = useNavigate();
@@ -7,6 +8,8 @@ const Registrar = () => {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [carga, setCarga] = useState(false);
+  const [logro, setLogro] = useState<{ Id: string; Nombre: string; Descripcion: string } | null>(null);
+  const [logroMostrado, setLogroMostrado] = useState<boolean>(false); // Estado para controlar si el logro ya se mostró
 
   const onRegistrar = async () => {
     setCarga(true);
@@ -33,7 +36,7 @@ const Registrar = () => {
       return;
     }
 
-    const url = "http://localhost:4100/Registrar"; 
+    const url = "http://localhost:4100/Registrar";
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -44,22 +47,37 @@ const Registrar = () => {
           Contraseña: contraseña,
         }),
       });
-    
-      if (response.ok) {
-        const data = await response.json();
+
+      const data = await response.json();
+      console.log("Respuesta del backend:", data); // Depuración para verificar la respuesta
+
+      if (!response.ok) {
+        Swal.fire({
+          title: "Error",
+          text: data.mensaje || response.statusText,
+          icon: "error",
+        });
+      } else {
+        if (!logroMostrado && data.logroDesbloqueado) {
+          // Solo mostrar el logro si no se ha mostrado antes y si existe
+          setLogro(data.logroDesbloqueado);
+          setLogroMostrado(true); // Marcar el logro como mostrado
+          Swal.fire({
+            title: "¡Éxito!",
+            text: `Usuario registrado correctamente.\n¡Logro desbloqueado: ${data.logroDesbloqueado.Nombre}!`,
+            icon: "success",
+          });
+        }
         const idUsuario = data.id;
         if (!idUsuario) throw new Error("No se recibió un id válido");
-        alert("Usuario registrado con éxito");
         navigate(`/Seleccionar-Rol/${idUsuario}`);
-      } else {
-        const error = await response.json();
-        alert(error.message || "Hubo un problema al registrar el usuario");
       }
     } catch (error) {
       console.error("Error: ", error);
       alert("Error al conectar con el servidor");
+    } finally {
+      setCarga(false);
     }
-    
   };
 
   return (
@@ -108,13 +126,22 @@ const Registrar = () => {
           </button>
         </div>
         <div className="otros-botones">
-              <button onClick={() => navigate("/")} disabled={carga}>
-                Inicio de sesión
-              </button>
-              <button onClick={() => navigate("/recuperar")} disabled={carga}>
-                Olvidé mi contraseña
-              </button>
-            </div>
+          <button onClick={() => navigate("/")} disabled={carga}>
+            Inicio de sesión
+          </button>
+          <button onClick={() => navigate("/recuperar")} disabled={carga}>
+            Olvidé mi contraseña
+          </button>
+        </div>
+
+        {/* Mostrar el logro desbloqueado */}
+        {logro && (
+          <div className="logro-desbloqueado">
+            <h3>¡Logro Desbloqueado!</h3>
+            <p><strong>{logro.Nombre}</strong></p>
+            <p>{logro.Descripcion}</p>
+          </div>
+        )}
       </div>
     </div>
   );

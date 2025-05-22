@@ -124,7 +124,7 @@
 /* Actualizar Tarea */
 .boton-actualizar {
   background-color: var(--info-color);
-  color: white;
+  color: black;
 }
 
 .boton-actualizar:hover {

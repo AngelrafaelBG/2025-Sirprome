@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 
 const CalificarTarea = () => {
   const navigate = useNavigate();
@@ -28,30 +28,48 @@ const CalificarTarea = () => {
         body: JSON.stringify({ Calificacion: calificacion }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        alert("Tarea calificada con éxito.");
-        navigate(`/VerTareas/${idProfesor}/${idGrupo}`);
+        if (data.logroDesbloqueado) {
+          Swal.fire({
+            title: "¡Éxito!",
+            text: `${data.mensaje}`,
+            icon: "success",
+          });
+        } else {
+          console.log(
+            "El logro ya estaba desbloqueado. No se mostrará la ventana emergente."
+          );
+        }
+        navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`);
       } else {
-        const error = await response.json();
-        console.error("Error de respuesta:", error);
-        alert(error.message || "Hubo un error al calificar la tarea.");
+        Swal.fire({
+          title: "Error",
+          text: data.mensaje,
+          icon: "error",
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
+      Swal.fire({
+        title: "Error",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+      });
     } finally {
       setCargando(false);
     }
   };
+
   useEffect(() => {
     const menu = document.getElementById("menu");
     const barra = document.getElementById("barra");
     const main = document.getElementById("main");
 
     const toggleMenu = () => {
-      barra!.classList.toggle('menu-contraer');
-      menu!.classList.toggle('menu-toggle');
-      main!.classList.toggle('menu-contraer');
+      barra!.classList.toggle("menu-contraer");
+      menu!.classList.toggle("menu-toggle");
+      main!.classList.toggle("menu-contraer");
     };
 
     if (menu) {
@@ -67,37 +85,48 @@ const CalificarTarea = () => {
 
   return (
     <>
-    <header>
+      <header>
         <div className="izq">
           <div className="menu-conteiner">
             <div className="menu" id="menu">
-            <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
+              <img
+                src="/Iconos/Icono-Menu.svg"
+                alt="icon-udemy"
+                className="logo"
+              />
             </div>
           </div>
           <div className="brand">
-            
             <span className="uno">Sirprome</span>
           </div>
         </div>
-        
       </header>
       <div className="barra-lateral" id="barra">
         <nav>
           <ul>
-          <li>
-              <a onClick={() => navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`)} className="Buscar">
+            <li>
+              <a
+                onClick={() =>
+                  navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`)
+                }
+                className="Buscar"
+              >
                 <img src="/Iconos/Icono-Contenedores.svg" alt="" />
                 <span>Tareas</span>
               </a>
             </li>
             <li>
-              <a >
+              <a>
                 <img src="/Iconos/Icono-Enviar.svg" alt="" />
                 <span>Calificar Tarea</span>
               </a>
             </li>
             <li>
-              <a onClick={() => navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`)} >
+              <a
+                onClick={() =>
+                  navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`)
+                }
+              >
                 <img src="/Iconos/Icono-Volver.svg" alt="" />
                 <span>Volver</span>
               </a>
@@ -112,27 +141,36 @@ const CalificarTarea = () => {
         </nav>
       </div>
       <main id="main">
-    <div className="fondo-ver">
-      <div className="contenedor-ver">
-        <h4>Calificar Tarea</h4>
-        <div className="agregar-clase">
-          <label htmlFor="calificacion">Calificación:</label>
-          <input className="agregar-miembro"
-            id="calificacion"
-            type="number"
-            value={calificacion}
-            onChange={(e) => setCalificacion(Number(e.target.value))}
-            min="0"
-          />
+        <div className="fondo-ver">
+          <div className="contenedor-ver">
+            <h4>Calificar Tarea</h4>
+            <div className="agregar-clase">
+              <label htmlFor="calificacion">Calificación:</label>
+              <input
+                className="agregar-miembro"
+                id="calificacion"
+                type="number"
+                value={calificacion}
+                onChange={(e) => setCalificacion(Number(e.target.value))}
+                min="0"
+              />
+            </div>
+            <div>
+              <button
+                onClick={onCalificar}
+                disabled={cargando}
+                className="boton-criterios boton-subir"
+              >
+                {cargando ? "Calificando..." : "Calificar Tarea"}{" "}
+                <img
+                  src="/Iconos/Icono-Enviar.svg"
+                  className="imagen-subir"
+                ></img>
+              </button>
+            </div>
+          </div>
         </div>
-        <div>
-          <button onClick={onCalificar} disabled={cargando} className="boton-criterios boton-subir">
-            {cargando ? "Calificando..." : "Calificar Tarea"} <img src="/Iconos/Icono-Enviar.svg" className="imagen-subir"></img>
-          </button>
-        </div>
-      </div>
-    </div>
-    </main>
+      </main>
     </>
   );
 };

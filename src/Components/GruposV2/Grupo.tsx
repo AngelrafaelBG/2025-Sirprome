@@ -214,12 +214,7 @@ const Grupo = () => {
     </div>
   )}
 
-  {cargando && (
-  <div className="loader-container">
-    <div className="loader"></div>
-  </div>
-)}
-
+  {!cargando && !grupo && <p>No se encontró información del grupo.</p>}
 </div>
 
     </>

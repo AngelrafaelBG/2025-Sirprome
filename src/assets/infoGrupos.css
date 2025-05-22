@@ -219,13 +219,14 @@
   background: rgba(239, 68, 68, 0.08);
   color: var(--error-600);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  width: 30%;
+  width: 34%;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 450;
   cursor: pointer;
   transition: all 0.2s ease;
+  
 }
 
 .Boton_EliminarCriterio_Detalles:hover {
