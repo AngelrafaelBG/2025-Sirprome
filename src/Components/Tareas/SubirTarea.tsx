@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/Estilos.css";
 
@@ -8,45 +9,58 @@ const SubirTarea = () => {
   const { idUsuario, idGrupo, idTarea } = useParams<{ idUsuario: string; idGrupo: string; idTarea: string }>();
   const [evidencia, setEvidencia] = useState<string>("");
   const [cargando, setCargando] = useState<boolean>(false);
-  
-  const onSubirTarea = async () => {
-    setCargando(true);
+  const [logro, setLogro] = useState<string>("");
 
+  const subirTarea = async () => {
     if (!evidencia.trim()) {
-      alert("Por favor, ingresa la evidencia de la tarea.");
-      setCargando(false);
+      Swal.fire("Por favor, ingresa la evidencia.");
       return;
     }
 
-    const url = `http://localhost:4100/SubirTarea/${idUsuario}/${idGrupo}/${idTarea}`; 
+    setCargando(true);
 
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ Evidencia: evidencia }), 
-      });
+      const response = await fetch(
+        `http://localhost:4100/SubirTarea/${idUsuario}/${idGrupo}/${idTarea}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ Evidencia: evidencia }),
+        }
+      );
 
-      if (response.ok) {
-        alert("Tarea subida con éxito.");
-        navigate(`/Grupos/${idUsuario}/${idGrupo}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        Swal.fire({
+          title: "Error",
+          text: data.mensaje || response.statusText,
+          icon: "error",
+        });
       } else {
-        const error = await response.json();
-        console.error("Error de respuesta:", error);
-        alert(error.message || "Hubo un error al subir la tarea.");
+        setLogro(data.logroDesbloqueado); 
+        Swal.fire({
+          title: "¡Éxito!",
+          text: data.logroDesbloqueado
+            ? `Tarea subida correctamente\n¡Logro desbloqueado: ${data.logroDesbloqueado}!`
+            : "Tarea subida correctamente",
+          icon: "success",
+        });
+        navigate(`/Grupos/${idUsuario}/${idGrupo}`);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
+      Swal.fire({
+        title: "Error",
+        text: "Error al subir la tarea.",
+        icon: "error",
+      });
     } finally {
       setCargando(false);
     }
   };
-  
-  
-  
+
   useEffect(() => {
     const menu = document.getElementById("menu");
     const barra = document.getElementById("barra");
@@ -71,19 +85,17 @@ const SubirTarea = () => {
 
   return (
     <>
-    <header>
+      <header>
         <div className="izq">
           <div className="menu-conteiner">
             <div className="menu" id="menu">
-            <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
+              <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
             </div>
           </div>
           <div className="brand">
-            
             <span className="uno">Sirprome</span>
           </div>
         </div>
-        
       </header>
       <div className="barra-lateral" id="barra">
         <nav>
@@ -95,46 +107,52 @@ const SubirTarea = () => {
               </a>
             </li>
             <li>
-              <a onClick={() => navigate('/Grupos/${idUsuario}/${idGrupo}')}>
+              <a onClick={() => navigate(`/Grupos/${idUsuario}/${idGrupo}`)}>
                 <img src="/Iconos/Icono-Volver.svg" alt="" />
                 <span>Volver</span>
               </a>
             </li>
             <li>
-              <a onClick={onSubirTarea}>
+              <a onClick={subirTarea}>
                 <img src="/Iconos/Icono-Contenedor.svg" alt="" />
                 <span>Subir Evidencia</span>
               </a>
             </li>
-            
           </ul>
         </nav>
       </div>
       <main id="main">
-    <div className="fondo-subir">
-      <div className="contenedor-subir">
-        <h4 className="titulo-subir">Subir Evidencia de Tarea</h4>
-        <div className="acomodo-subir">
-        <div className="arreglo-subir"> 
-          <label htmlFor="evidencia">Evidencia:</label>
-          
+        <div className="fondo-subir">
+          <div className="contenedor-subir">
+            <h4 className="titulo-subir">Subir Evidencia de Tarea</h4>
+            <div className="acomodo-subir">
+              <div className="arreglo-subir">
+                <label htmlFor="evidencia">Evidencia:</label>
+              </div>
+              <textarea
+                id="evidencia"
+                value={evidencia}
+                onChange={(e) => setEvidencia(e.target.value)}
+                rows={5}
+                cols={40}
+                placeholder="Escribe aquí tu evidencia (texto, enlace, etc.)"
+                disabled={cargando}
+              />
+            </div>
+            <button onClick={subirTarea} className="boton-criterios boton-subir" disabled={cargando}>
+              {cargando ? "Subiendo..." : "Subir Tarea"}
+              <img src="/Iconos/Icono-Enviar.svg" className="imagen-subir" />
+            </button>
+            {/* Mostrar el logro desbloqueado */}
+            {logro && (
+              <div className="logro-desbloqueado">
+                <h3>¡Logro Desbloqueado!</h3>
+                <p>{logro}</p>
+              </div>
+            )}
           </div>
-          <textarea className="apartado-subir"
-            id="evidencia"
-            placeholder="Describe o pega la evidencia aquí"
-            value={evidencia}
-            onChange={(e) => setEvidencia(e.target.value)}
-            rows={5}
-          ></textarea>
-          
-      </div>
-      <button onClick={onSubirTarea} className="boton-criterios boton-subir" disabled={cargando}>
-            {cargando ? "Subiendo..." : "Subir Tarea"}
-            <img src="/Iconos/Icono-Enviar.svg" className="imagen-subir" />
-          </button>
-      </div>
-    </div>
-    </main>
+        </div>
+      </main>
     </>
   );
 };

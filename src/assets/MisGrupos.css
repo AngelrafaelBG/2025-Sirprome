@@ -1,246 +1,208 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-.Contenedor_MisGrupos{
-    margin: 10px;
-    padding: 10px;
+/* Variables CSS */
+:root {
+  --primary-color: #0097b2;
+  --secondary-color: #6c757d;
+  --danger-color: #dc3545;
+  --dark-color: black;
+  --light-color: white;
+  --border-radius: 15px;
+  --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  --box-shadow-hover: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --spacing-sm: 5px;
+  --spacing-md: 10px;
+  --spacing-lg: 15px;
 }
 
-.Titulo_Grupo_Profesores{
-    font-weight: bold;
-    font-size: 30px;
+/* Estilos base */
+body {
+  font-family: 'Open Sans', sans-serif;
 }
 
-.Contenedor_Imagen_MisGrupos{
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    border-radius: 15px;
-    background-color:2px red solid ;
-}
-.Imagen_MisGrupos{
-    object-fit: cover;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: auto;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 15px;
-}
-.Miembros_MisGrupos{
-    font-size: large;
-    width: 100%;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color:  white;
-    
+/* Estilos reutilizables */
+.card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: box-shadow 0.3s ease;
 }
 
-.Boton_Eliminar_Mis_Grupos{
-    margin: 5px;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color:  white;
-    
+.card:hover {
+  box-shadow: var(--box-shadow-hover);
 }
 
-.Union_Criterio_Miembros{
-    margin: 5px;
-    display: inline-block;
+.btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.Boton_Criterio_Grupo{
-    margin: 5px;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color: white;
+.btn-primary {
+  border: 2px solid var(--primary-color);
+  background-color: var(--light-color);
+  color: var(--dark-color);
 }
 
-.Boton_Crear_Tarea{
-    margin: 5px;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color: white;
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--light-color);
+  border: 2px solid var(--secondary-color);
 }
 
-.Boton_Ver_Detalle{
-    margin: 5px;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color: white;
+.btn-danger {
+  background-color: var(--danger-color);
+  color: var(--light-color);
+  border: 2px solid var(--danger-color);
 }
 
-.Contenedor_Grupos_IdGrupo{
-    gap: 10px;
-    margin-bottom: 25px;
-    padding: 3px;
-    margin: 5px;
-    flex-basis: 100px;
-    flex-grow: 1;
-    text-align: center;
-    display:inline-block;
-    border: 2px solid black;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 15px;
+.btn-dark {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  border: 2px solid gray;
 }
 
-.Icono_Detalle{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Icono_Borrar{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Icono_Miembro_Grupos{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Icono_Criterio_Grupos{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Icono_Tarea{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Titulo_Grupo{
-    text-align: center;
-    font-size: 25px;
-}
-.Icono_Info{
-    text-align: left;
-    display: inline-block;
-    text-align: center;
-    margin: 3px;
-}
-.Ver_Tareas_MisGrupos{
-    margin: 5px;
-    border: 2px solid #0097b2;
-    border-radius: 15px;
-    background-color:  white;
-}
-.Boton_Crear_Grupos{    
-    padding: 15px;
-    margin: 15px;
-    border: 2px solid gray;
-    border-radius: 15px;
-    background-color: black;
-}
-.Texto_Crear_Grupos{
-    font-size: 13px;
-    font-weight: bold;
-    color: white;
-}
-.Boton_Eliminar_Usuario{
-    padding: 15px;
-    margin: 15px;
-    border: 2px solid gray;
-    border-radius: 15px;
-    background-color: black;
-}
-.Texto_Eliminar_Usuario{
-    font-size: 13px;
-    font-weight: bold;
-    color: white;
-}
-.Contenedor_Detalles{
-    display: flex;
-    justify-content: center;       
-    align-items: center;           
-    flex-wrap: wrap;              
-    align-content: flex-start;    
-    padding: 10px;
-    border-radius: 15px;        
-    height: 100vh;                 
-    width: 100%;     
-}
-  
-
-.Grupo_Detalles{
-    margin: 10px;
-    text-align: center;
-}
-.Contendor_Detalles2{
-    border-radius: 15px;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-    border: 2px solid gray
+.icon {
+  display: inline-block;
+  text-align: center;
+  margin: 3px;
 }
 
-.Imagen_Detalles{
-    object-fit: cover;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: auto;
-    margin: 10px;
-    padding: 8px;
-    border-radius: 15px;
-
+/* Estilos específicos */
+.Contenedor_MisGrupos {
+  margin: var(--spacing-md);
+  padding: var(--spacing-md);
 }
 
-.Detalles_Rol_Miembros_Codigo{
-    flex-basis:100px;
-    flex-grow: 1;
-    padding: 4px;
-    margin: 18px;
-    border-radius: 15px;
-    text-align: center;
-    border: 2px solid gray;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+.Titulo_Grupo_Profesores {
+  font-weight: bold;
+  font-size: 30px;
 }
 
-
-
-
-.Titulo_AccionesCriteerios_Detalles{
-    font-weight: bold;
-}
-.Boton_VerCriterios_Detalles{
-    margin: 3px;
-    border-radius: 8px;
-    color: white;
-    border: 2px solid #6c757d;
-    background-color:  #6c757d;
+.Contenedor_Imagen_MisGrupos {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  border: 2px solid red; /* Corregido: estaba mal escrito */
 }
 
-.Boton_EliminarCriterio_Detalles{
-    width: 22%;
-    margin: 3px;
-    border-radius: 8px;
-    color: white;
-    border: 2px solid #dc3545;
-    background-color:  #dc3545;
+.Imagen_MisGrupos,
+.Imagen_Detalles {
+  object-fit: cover;
+  display: inline-block;
+  margin: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
 }
 
-.Miembros_del_Grupo_Detalles{
-    text-align: center;
-    padding: 4px;
-    font-weight: bold;
+.Miembros_MisGrupos,
+.Detalles_Rol_Miembros_Codigo {
+  width: 100%;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  background-color: var(--light-color);
+  padding: 4px;
+  margin: var(--spacing-lg) var(--spacing-md);
 }
 
-.Botones_Eliminar_Calificar_Detalles{
-    margin: 3px;
-    padding: 3px;
+.Contenedor_Grupos_IdGrupo {
+  gap: var(--spacing-md);
+  margin-bottom: 25px;
+  padding: 3px;
+  margin: var(--spacing-sm);
+  flex-basis: 100px;
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  border: 2px solid var(--dark-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
-.Calificar_Criterio_Detalle{
-    margin: 3px;
-    border-radius: 8px;
-    color: white;
-    border: 2px solid #6c757d;
-    background-color:  #6c757d;
+.Titulo_Grupo {
+  text-align: center;
+  font-size: 25px;
+}
+
+.Contenedor_Detalles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  width: 100%;
+}
+
+.Grupo_Detalles {
+  margin: var(--spacing-md);
+  text-align: center;
+}
+
+.Contendor_Detalles2 {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: 2px solid gray;
+}
+
+/* Botones específicos */
+.Boton_Eliminar_Mis_Grupos,
+.Boton_Criterio_Grupo,
+.Boton_Crear_Tarea,
+.Boton_Ver_Detalle,
+.Ver_Tareas_MisGrupos {
+  composes: btn btn-primary;
+  margin: var(--spacing-sm);
+}
+
+.Boton_Crear_Grupos,
+.Boton_Eliminar_Usuario {
+  composes: btn btn-dark;
+  padding: var(--spacing-lg);
+  margin: var(--spacing-lg);
+}
+
+.Boton_VerCriterios_Detalles,
+.Calificar_Criterio_Detalle {
+  composes: btn btn-secondary;
+  margin: 3px;
+}
+
+.Boton_EliminarCriterio_Detalles {
+  composes: btn btn-danger;
+  width: 22%;
+  margin: 3px;
+}
+
+/* Textos */
+.Texto_Crear_Grupos,
+.Texto_Eliminar_Usuario {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--light-color);
+}
+
+.Titulo_AccionesCriteerios_Detalles {
+  font-weight: bold;
+}
+
+.Miembros_del_Grupo_Detalles {
+  text-align: center;
+  padding: 4px;
+  font-weight: bold;
+}
+
+/* Iconos */
+.Icono_Detalle,
+.Icono_Borrar,
+.Icono_Miembro_Grupos,
+.Icono_Criterio_Grupos,
+.Icono_Tarea,
+.Icono_Info {
+  composes: icon;
 }

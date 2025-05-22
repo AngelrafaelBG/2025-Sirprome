@@ -133,6 +133,7 @@ const VerGrupos = () => {
                 <span>Cerrar Sesion</span>
               </a>
             </li>
+
             <li>
               <a onClick={onEliminarUsuario} >
                 <img src="/Iconos/Icono-EliminarCuenta.svg" alt="" />
@@ -142,8 +143,8 @@ const VerGrupos = () => {
           </ul>
         </nav>
       </div>
+
       <main id="main">
-        
       <div className="fondo-ver">
         <div className="contenedor-ver">
           <h4>Grupos del Estudiante</h4>
