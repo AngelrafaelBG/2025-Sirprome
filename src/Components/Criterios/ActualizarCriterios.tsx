@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/ActualizarCriterio.css";
 
@@ -13,12 +14,22 @@ const ActualizarCriterio = () => {
 
   const onActualizarCriterio = async () => {
     if (!aCriterio.trim() || !nuevoCriterio.trim()) {
-      alert("Por favor, ingresa los nombres del criterio a actualizar y el nuevo criterio.");
+      Swal.fire({
+        title: "Campos incompletos",
+        text: "Por favor, ingresa los nombres del criterio a actualizar y el nuevo criterio.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       return;
     }
 
     if (valor <= 0) {
-      alert("Por favor, ingresa un valor válido para el criterio.");
+      Swal.fire({
+        title: "Valor inválido",
+        text: "Por favor, ingresa un valor válido para el criterio.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       return;
     }
 
@@ -40,16 +51,31 @@ const ActualizarCriterio = () => {
       });
 
       if (response.ok) {
-        alert("Criterio actualizado con éxito.");
-        navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`); 
+        Swal.fire({
+          title: "Criterio actualizado con éxito",
+          text: "El criterio se ha actualizado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`);
+        });
       } else {
         const error = await response.json();
-        console.error("Error de respuesta:", error);
-        alert(error.message || "Hubo un error al actualizar el criterio.");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Hubo un error al actualizar el criterio.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCargando(false);
     }

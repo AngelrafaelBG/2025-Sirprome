@@ -20,8 +20,12 @@
   --gray-800: #1f2937;
   --error-500: #ef4444;
   --success-500: #10b981;
+  --background-color: #ffffff;
+  --text-color: #111827;
+  --primary-color: #0ea5e9;
+  --hover-color: #0284c7;
+  --border-color: #e0f2fe;
 }
-
 /* Estilos base mejorados */
 .info-grupo-container {
   max-width: 1300px;
@@ -108,7 +112,7 @@
 
 .contenedor-derecha {
   flex: 2;
-  min-width: 320px;
+  min-width: 330px;
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -138,10 +142,8 @@
 }
 
 .imagen-grupo:hover {
-  transform: scale(1.05) rotate(2deg);
-  box-shadow: 
-    0 0 0 6px var(--primary-200),
-    0 12px 32px rgba(2, 132, 199, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Datos del grupo con diseño mejorado */
@@ -190,6 +192,17 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  
+}
+.barra-busqueda {
+    width: 70%;
+    padding: 6px 6px;
+    margin-top: -6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f8fafc;
 }
 .Calificar_Criterio_Detalle {
   background: linear-gradient(to right, var(--primary-100), var(--primary-50));
@@ -219,7 +232,7 @@
   background: rgba(239, 68, 68, 0.08);
   color: var(--error-600);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  width: 34%;
+  width: 30%;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -560,15 +573,33 @@
   transform: translateY(-1px);
 }
 
-/* Efecto cursor parpadeante (opcional) */
-@keyframes blink {
-  0%, 100% { opacity: 1 }
-  50% { opacity: 0 }
+/* Animación de entrada para los contenedores */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.miembro-item:last-child::after {
-  content: '|';
-  color: var(--primary-500);
-  animation: blink 1s infinite;
-  margin-left: 0.3rem;
+.info-grupo {
+  animation: fadeInLeft 0.7s ease-in-out;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
 }

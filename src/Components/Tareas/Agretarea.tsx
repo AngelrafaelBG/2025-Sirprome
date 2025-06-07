@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/Estilos.css";
 
@@ -14,17 +15,32 @@ const CrearTarea = () => {
   const onCrearTarea = async () => {
     setCarga(true);
     if (!titulo.trim()) {
-      alert("Ingrese el título de la tarea");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Ingrese el título de la tarea",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
     if (!descripcion.trim()) {
-      alert("Ingrese la descripción de la tarea");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Ingrese la descripción de la tarea",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
     if (!valorMax || valorMax <= 0) {
-      alert("El valor máximo debe ser mayor a 0");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "El valor máximo debe ser mayor a 0",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
@@ -45,18 +61,34 @@ const CrearTarea = () => {
       });
 
       if (response.ok) {
-        alert("Tarea creada con éxito");
-        setTitulo("");
-        setDescripcion("");
-        setValorMax(null);
-        navigate(`/MisGrupos/${idProfesor}`);
+        Swal.fire({
+          title: "Tarea agregada con éxito",
+          text: "La tarea se ha agregado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          setTitulo("");
+          setDescripcion("");
+          setValorMax(null);
+          navigate(`/MisGrupos/${idProfesor}`);
+        });
       } else {
         const error = await response.json();
-        alert(error.message || "Error al crear la tarea");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Error al agregar la tarea",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCarga(false);
     }

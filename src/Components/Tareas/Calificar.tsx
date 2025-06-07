@@ -12,7 +12,12 @@ const CalificarTarea = () => {
     setCargando(true);
 
     if (calificacion < 0) {
-      alert("Por favor, ingresa una calificación válida.");
+       Swal.fire({
+        title: "Valor inválido",
+        text: "Por favor, ingresa una calificación válida.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCargando(false);
       return;
     }
@@ -31,30 +36,28 @@ const CalificarTarea = () => {
       const data = await response.json();
 
       if (response.ok) {
-        if (data.logroDesbloqueado) {
-          Swal.fire({
-            title: "¡Éxito!",
-            text: `${data.mensaje}`,
-            icon: "success",
-          });
-        } else {
-          console.log(
-            "El logro ya estaba desbloqueado. No se mostrará la ventana emergente."
-          );
-        }
-        navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`);
+        Swal.fire({
+          title: "Tarea calificada con éxito",
+          text: "La tarea ha sido calificada correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/TareaAlumnos/${idProfesor}/${idGrupo}/${idTarea}`);
+        });
       } else {
         Swal.fire({
           title: "Error",
-          text: data.mensaje,
+          text: data.mensaje || "Hubo un error al calificar la tarea.",
           icon: "error",
+          confirmButtonText: "Reintentar",
         });
       }
     } catch (error) {
       Swal.fire({
-        title: "Error",
+        title: "Error de conexión",
         text: "No se pudo conectar con el servidor.",
         icon: "error",
+        confirmButtonText: "Reintentar",
       });
     } finally {
       setCargando(false);

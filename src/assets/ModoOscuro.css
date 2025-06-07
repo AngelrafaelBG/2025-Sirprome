@@ -1,0 +1,32 @@
+/* Modo claro (por defecto) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #4285f4;
+  --secondary-color: #34a853;
+  --border-color: #e0e0e0;
+  --hover-color: #f1f1f1;
+}
+
+/* Modo oscuro */
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --primary-color: #bb86fc;
+  --secondary-color: #03dac6;
+  --border-color: #333333;
+  --hover-color: #1f1f1f;
+}
+.boton-modo {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.boton-modo:hover {
+  background-color: var(--secondary-color);
+}

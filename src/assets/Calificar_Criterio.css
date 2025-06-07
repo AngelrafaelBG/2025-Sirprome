@@ -4,13 +4,17 @@
   --background-light: #f8f9fa;
   --text-dark: #343a40;
   --border-color: #dee2e6;
+  --background-color: #ffffff;
+  --text-color: #343a40;
+  --primary-color: #138496;
+  --hover-color: #17a2b8;
 }
 
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--background-light);
-  color: var(--text-dark);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 #main {
@@ -161,4 +165,14 @@ label {
 .boton-criterios:hover {
   background-color: var(--main-color-light);
   animation: buttonPulse 0.3s ease;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
 }

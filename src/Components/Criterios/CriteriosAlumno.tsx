@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../assets/CriterioAlumno.css";
+import "../../assets/Comentario.css"
 import {
   RadarChart,
   Radar,
@@ -220,6 +221,9 @@ const CriterioAlumno = () => {
           valor: criterio.Evaluacion[idx],
         }));
 
+       
+        const valorMaximo = Math.max(...criterio.Evaluacion);
+
         return (
           <div key={index} className="evaluation-container">
             <div className="student-header">
@@ -244,46 +248,48 @@ const CriterioAlumno = () => {
               ))}
             </div>
 
-            {datosRadar.length > 0 && (
-              <div className="chart-container">
-                <h3 className="chart-title">Gráfica de Evaluación</h3>
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadarChart data={datosRadar}>
-                    <PolarGrid />
-                    <PolarAngleAxis dataKey="criterio" />
-                    <PolarRadiusAxis />
-                    <Radar
-                      name={criterio.Alumno}
-                      dataKey="valor"
-                      stroke="#8884d7"
-                      fill="#8884d8"
-                      fillOpacity={0.5}
-                    />
-                  </RadarChart>
-                </ResponsiveContainer>
-              </div>
-            )}
-
-            <div className="comments-section">
-              <div className="comments-title">Comentarios del Instructor</div>
-              {criterio.ComentariosRecibidos.length > 0 ? (
-                <ul>
-                  {criterio.ComentariosRecibidos.map((comentario) => (
-                    <li key={comentario.Id}>
-                      <p><b>Comentario:</b> {comentario.Comentario}</p>
-                      <button
-                        onClick={() => EliminarComentario(comentario.Id, criterio.IdCriterio)}
-                        className="boton-criterios boton-subir"
-                      >
-                        Eliminar Comentario
-                        <MdDelete style={{ fontSize: "20px" }} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="no-comments">No hay comentarios registrados para este período</p>
+            <div className="chart-comments-container">
+              {datosRadar.length > 0 && (
+                <div className="chart-container">
+                  <h3 className="chart-title">Gráfica de Evaluación</h3>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={datosRadar}>
+                      <PolarGrid />
+                      <PolarAngleAxis dataKey="criterio" />
+                      <PolarRadiusAxis domain={[0, valorMaximo]} /> {/* Límite dinámico */}
+                      <Radar
+                        name={criterio.Alumno}
+                        dataKey="valor"
+                        stroke="#8884d7"
+                        fill="#8884d8"
+                        fillOpacity={0.5}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
               )}
+
+              <div className="comments-section">
+                <div className="comments-title">Comentarios del Instructor</div>
+                {criterio.ComentariosRecibidos.length > 0 ? (
+                  <ul className="comments-list">
+                    {criterio.ComentariosRecibidos.map((comentario) => (
+                      <li key={comentario.Id} className="comment-item">
+                        <p><b>Comentario:</b> {comentario.Comentario}</p>
+                        <button
+                          onClick={() => EliminarComentario(comentario.Id, criterio.IdCriterio)}
+                          className="boton-criterios boton-subir"
+                        >
+                          Eliminar Comentario
+                          <MdDelete style={{ fontSize: "20px" }} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="no-comments">No hay comentarios registrados para este período</p>
+                )}
+              </div>
             </div>
 
             <button
@@ -293,6 +299,9 @@ const CriterioAlumno = () => {
               Enviar Comentario
               <img src="/Iconos/Icono-Comentario.svg" className="imagen-subir" />
             </button>
+            {index < criteriosFiltrados.length - 1 && (
+              <hr className="student-separator" />
+            )}
           </div>
         );
       })

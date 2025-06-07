@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/Crear_Grupo.css";
 
@@ -37,7 +38,7 @@ const CrearGrupo = () => {
 
   const onCrearGrupo = async () => {
     if (!validateForm()) return;
-    
+
     setCarga(true);
 
     const url = `http://localhost:4100/CrearGrupo/${idProfesor}`;
@@ -56,17 +57,33 @@ const CrearGrupo = () => {
       });
 
       if (response.ok) {
-        alert("Grupo creado con éxito");
-        setNombre("");
-        setImagen("");
-        navigate(`/MisGrupos/${idProfesor}`);
+        Swal.fire({
+          title: "Grupo creado con éxito",
+          text: "El grupo se ha creado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          setNombre("");
+          setImagen("");
+          navigate(`/MisGrupos/${idProfesor}`);
+        });
       } else {
         const error = await response.json();
-        alert(error.message || "Error al crear el grupo");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Error al crear el grupo.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCarga(false);
     }

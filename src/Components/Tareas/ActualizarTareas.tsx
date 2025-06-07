@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/ActualizarTarea.css";
 
 const ActualizarTarea = () => {
@@ -14,17 +15,32 @@ const ActualizarTarea = () => {
   const onActualizarTarea = async () => {
     setCarga(true);
     if (!titulo.trim()) {
-      alert("Ingrese el título de la tarea");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Ingrese el título de la tarea",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
     if (!descripcion.trim()) {
-      alert("Ingrese la descripción de la tarea");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Ingrese la descripción de la tarea",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
     if (!valorMax || valorMax <= 0) {
-      alert("El valor máximo debe ser mayor a 0");
+      Swal.fire({
+        title: "Valor inválido",
+        text: "El valor máximo debe ser mayor a 0",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
@@ -45,15 +61,31 @@ const ActualizarTarea = () => {
       });
 
       if (response.ok) {
-        alert("Tarea actualizada con éxito");
-        navigate(`/TareasGrupo/${idGrupo}`);
+        Swal.fire({
+          title: "Tarea actualizada con éxito",
+          text: "La tarea se ha actualizado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/TareasGrupo/${idGrupo}`);
+        });
       } else {
         const error = await response.json();
-        alert(error.message || "Error al actualizar la tarea");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Error al actualizar la tarea.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor para actualizar la tarea");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor para actualizar la tarea.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCarga(false);
     }

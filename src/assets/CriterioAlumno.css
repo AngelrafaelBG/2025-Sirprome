@@ -1,8 +1,23 @@
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
 .contenedor-alumno {
   background: #ffffff;
   border-radius: 12px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px; /* Aumentado para acomodar el nuevo diseño */
   margin: 0 auto;
   padding: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -124,6 +139,13 @@
   color: #2563eb;
 }
 
+.chart-comments-container {
+  display: flex;
+  gap: 25px;
+  width: 100%;
+  margin-top: 25px;
+}
+
 .chart-container {
   flex: 1;
   min-width: 300px;
@@ -139,11 +161,13 @@
 }
 
 .comments-section {
+  flex: 1;
+  min-width: 300px;
   background: #f8fafc;
   padding: 20px;
   border-radius: 8px;
-  margin-top: 25px;
-  width: 100%;
+  max-height: 350px;
+  overflow-y: auto;
 }
 
 .comments-title {
@@ -160,35 +184,113 @@
   padding: 10px;
 }
 
-.boton-criterios {
+/* Lista de comentarios */
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-item {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.comment-item p {
+  margin: 0 0 10px 0;
+}
+
+.comment-item button {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
+  margin-top: 10px;
   background: #3b82f6;
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: 600;
-  margin-top: 20px;
   cursor: pointer;
   transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
-.boton-criterios:hover {
+.comment-item button:hover {
   background: #2563eb;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
 }
 
-.imagen-subir {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0) invert(1);
+.student-separator {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 20px 0;
 }
 
+/* Ajustar el diseño de los botones */
+.boton-criterios {
+  margin: 10px 5px; /* Reducir el espacio entre botones */
+  padding: 10px 15px;
+  font-size: 0.9rem;
+}
+
+/* Agrupar los grupos de a 3 */
+.contenedor-grupos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 20px; /* Espacio entre los grupos */
+  margin-top: 20px;
+}
+
+.grupo-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.grupo-item h5 {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #2563eb;
+}
+
+.grupo-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Animación de entrada para los contenedores */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.contenedor-alumno {
+  animation: slideIn 0.6s ease-in-out;
+}
+
+/* Hover para los botones */
+.boton-criterios {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.boton-criterios:hover {
+  transform: translateY(-3px);
+  background-color: #2563eb;
+}
+
+/* Estilos responsivos */
 @media (max-width: 768px) {
   .criteria-grid {
     grid-template-columns: 1fr;
@@ -199,7 +301,19 @@
     align-items: flex-start;
   }
   
-  .chart-container {
-    height: 300px;
+  .chart-container,
+  .comments-section {
+    width: 100%;
   }
+  
+  .comments-section {
+    max-height: none;
+  }
+}
+
+.no-data {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 20px;
 }

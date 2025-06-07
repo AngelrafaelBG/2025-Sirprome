@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/insertarCriterios.css";
 
@@ -14,19 +15,34 @@ const InsertarCriterios = () => {
     setCargando(true);
 
     if (!idProfesor || !idGrupo || !idCriterio) {
-      alert("Faltan parámetros en la URL (idProfesor, idGrupo o idCriterio).");
+      Swal.fire({
+        title: "Error",
+        text: "Faltan parámetros en la URL (idProfesor, idGrupo o idCriterio).",
+        icon: "error",
+        confirmButtonText: "Entendido",
+      });
       setCargando(false);
       return;
     }
 
     if (!criterio.trim()) {
-      alert("Por favor, introduce el nombre del criterio.");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Por favor, introduce el nombre del criterio.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCargando(false);
       return;
     }
 
     if (valor <= 0) {
-      alert("El valor del criterio debe ser mayor a 0.");
+      Swal.fire({
+        title: "Valor inválido",
+        text: "El valor del criterio debe ser mayor a 0.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCargando(false);
       return;
     }
@@ -43,16 +59,31 @@ const InsertarCriterios = () => {
       });
 
       if (response.ok) {
-        alert("Criterio insertado con éxito.");
-        navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`);
+        Swal.fire({
+          title: "Criterio insertado con éxito",
+          text: "El criterio se ha insertado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`);
+        });
       } else {
         const error = await response.json();
-        console.error("Error de respuesta:", error);
-        alert(error.message || "Hubo un error al insertar el criterio.");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Hubo un error al insertar el criterio.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCargando(false);
     }

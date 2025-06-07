@@ -5,6 +5,8 @@ import { GoChecklist } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/verGrupos.css";
+import "../../assets/ModoOscuro.css";
+
 
 const VerGrupos = () => {
   const { idUsuario } = useParams<{ idUsuario: string }>();
@@ -145,65 +147,63 @@ const VerGrupos = () => {
       </div>
 
       <main id="main">
-      <div className="fondo-ver">
-        <div className="contenedor-ver">
-          <h4>Grupos del Estudiante</h4>
-          {carga && <p>Cargando grupos...</p>}
-          {error && <p className="error">{error}</p>}
+  <div className="fondo-ver">
+    <div className="contenedor-ver">
+      <h4>Grupos del Estudiante</h4>
+      {carga && <p>Cargando grupos...</p>}
+      {error && <p className="error">{error}</p>}
 
-          {grupos.length > 0 ? (
-            <ul className="Contenedor_Imagen_MisGrupos">
-              {grupos.map((grupo) => (
-                <li key={grupo.IdGrupo} className="Contenedor_Grupos_IdGrupo">
-                  <h5 className="Titulo_Grupo">{grupo.Grupo}</h5>
-                  <img
-                    src={grupo.Imagen}
-                    alt={grupo.Grupo}
-                    style={{ width: "160px", height: "150px" }}
-                  />
-                  <div className="contenido-grupo">
-                    <p className="Miembros_MisGrupos">
-                      <span className="Icono_Miembro_Grupos">
-                        <IoPeopleSharp style={{ fontSize: "20px" }} />
-                        Miembros: {grupo.Miembros}
-                      </span>
-                    </p>
-                    <div className="botones-grupo">
-                      <button
-                        className="Boton_Ver_Detalle"
-                        onClick={() =>
-                          navigate(`/Grupos/${idUsuario}/${grupo.IdGrupo}`)
-                        }
-                      >
-                        <span className="Icono_Detalle">
-                          <GoChecklist style={{ fontSize: "20px" }} />
-                        </span>
-                        Ver Tareas
-                      </button>
-                      <button
-                        className="Boton_Criterio_Grupo"
-                        onClick={() =>
-                          navigate(
-                            `/CriterioAlumno/${idUsuario}/${grupo.IdGrupo}`
-                          )
-                        }
-                      >
-                        <span className="Icono_Criterio_Grupos">
-                          <FaEdit style={{ fontSize: "20px" }} />
-                        </span>
-                        Graficas
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Cargando los Grupos Porfavor espere.</p>
-          )}
-        </div>
-      </div>
-      </main>
+      {grupos.length > 0 ? (
+        <ul className="Contenedor_Imagen_MisGrupos">
+          {grupos.map((grupo) => (
+            <li key={grupo.IdGrupo} className="Contenedor_Grupos_IdGrupo">
+              <h5 className="Titulo_Grupo">{grupo.Grupo}</h5>
+              <img
+                src={grupo.Imagen}
+                alt={grupo.Grupo}
+                style={{ width: "160px", height: "150px" }}
+              />
+              <div className="contenido-grupo">
+                <p className="Miembros_MisGrupos">
+                  <span className="Icono_Miembro_Grupos">
+                    <IoPeopleSharp style={{ fontSize: "20px" }} />
+                    Miembros: {grupo.Miembros}
+                  </span>
+                </p>
+                <div className="botones-grupo">
+                  <button
+                    className="Boton_Ver_Detalle"
+                    onClick={() =>
+                      navigate(`/Grupos/${idUsuario}/${grupo.IdGrupo}`)
+                    }
+                  >
+                    <span className="Icono_Detalle">
+                      <GoChecklist style={{ fontSize: "20px" }} />
+                    </span>
+                    Ver Tareas
+                  </button>
+                  <button
+                    className="Boton_Criterio_Grupo"
+                    onClick={() =>
+                      navigate(`/CriterioAlumno/${idUsuario}/${grupo.IdGrupo}`)
+                    }
+                  >
+                    <span className="Icono_Criterio_Grupos">
+                      <FaEdit style={{ fontSize: "20px" }} />
+                    </span>
+                    Graficas
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Cargando los Grupos Porfavor espere.</p>
+      )}
+    </div>
+  </div>
+</main>
       </>
   );
 };

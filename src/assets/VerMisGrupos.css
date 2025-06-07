@@ -62,7 +62,7 @@
 /* Contenedor de grupos - 2 por fila */
 .Contenedor_Imagen_MisGrupos {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 25px;
   padding: 0;
   list-style: none;
@@ -110,10 +110,23 @@
 }
 
 /* Estilos generales para botones */
-.Contenedor_Botones button {
+.Contenedor_Botones button {body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
   border: none;
   border-radius: 5px;
-  padding: 10px;
+  padding: 9px;
   font-size: 0.9rem;
   cursor: pointer;
   display: flex;

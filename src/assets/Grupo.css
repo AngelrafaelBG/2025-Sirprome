@@ -30,9 +30,11 @@
 .contenido-grupo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 5px;
   align-items: flex-start;
-  gap: 40px;
   flex-wrap: wrap;
+  padding: 10px;
 }
 
 /* Lados */
@@ -49,8 +51,8 @@
 /* GRID de tareas */
 .tasks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas por fila */
+  gap: 20px; /* Espaciado entre los elementos */
 }
 
 /* Tarjeta individual */
@@ -61,11 +63,12 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-left: 4px solid var(--primary-color);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .task-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .task-header {
@@ -164,6 +167,10 @@
   .titulo-principal {
     font-size: 1.4rem;
   }
+
+  .tasks-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas por fila en pantallas medianas */
+  }
 }
 
 @media (max-width: 768px) {
@@ -181,7 +188,7 @@
   }
 
   .tasks-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr; /* 1 columna por fila en pantallas pequeñas */
   }
 }
 
@@ -330,4 +337,31 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Animación de entrada para las tarjetas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
 }

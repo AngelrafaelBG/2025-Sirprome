@@ -113,9 +113,9 @@ const Grupo = () => {
               </li>
             )}
             <li>
-              <a onClick={() => navigate(`/VerGrupos/${idUsuario}`)}>
+              <a onClick={() => navigate(`/MisGrupos/${idUsuario}`)}>
                 <img src="/Iconos/Icono-Volver.svg" alt="" />
-                <span>Volver</span>
+                <span>Volver</span>  
               </a>
             </li>
             <li>
