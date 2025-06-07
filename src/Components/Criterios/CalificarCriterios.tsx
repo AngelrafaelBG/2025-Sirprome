@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/Calificar_Criterio.css";
 
@@ -12,12 +13,22 @@ const CalificarAlumno = () => {
 
   const onCalificar = async () => {
     if (!criterio.trim()) {
-      alert("Por favor, ingresa el criterio que vas a calificar.");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Por favor, ingresa el criterio que vas a calificar.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       return;
     }
 
     if (evaluacion <= 0) {
-      alert("Por favor, ingresa una evaluación válida.");
+      Swal.fire({
+        title: "Valor inválido",
+        text: "Por favor, ingresa una evaluación válida.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       return;
     }
 
@@ -38,16 +49,31 @@ const CalificarAlumno = () => {
       });
 
       if (response.ok) {
-        alert("Evaluación calificada con éxito.");
-        navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`); // Redirige al listado de criterios
+        Swal.fire({
+          title: "Criterio calificado con éxito",
+          text: "El criterio ha sido calificado correctamente.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`);
+        });
       } else {
         const error = await response.json();
-        console.error("Error de respuesta:", error);
-        alert(error.message || "Hubo un error al calificar el criterio.");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Hubo un error al calificar el criterio.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCargando(false);
     }
@@ -94,7 +120,7 @@ const CalificarAlumno = () => {
         <nav>
           <ul>
           <li>
-              <a onClick={() => navigate(`/InfoGrupo/${idProfesor}/${idGrupo}`)} className="Buscar">
+              <a onClick={() => navigate(`/CalificarCriterio/${idProfesor}/${idGrupo}`)} className="Buscar">
                 <img src="/Iconos/Icono-Contenedores.svg" alt="" />
                 <span>Info Grupo</span>
               </a>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
-import "../../assets/Estilos.css";
+import "../../assets/SubirTarea.css";
 
 const SubirTarea = () => {
   const navigate = useNavigate();
@@ -13,7 +13,12 @@ const SubirTarea = () => {
 
   const subirTarea = async () => {
     if (!evidencia.trim()) {
-      Swal.fire("Por favor, ingresa la evidencia.");
+      Swal.fire({
+        title: "Campo requerido",
+        text: "Por favor, ingresa la evidencia.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       return;
     }
 
@@ -38,23 +43,27 @@ const SubirTarea = () => {
           title: "Error",
           text: data.mensaje || response.statusText,
           icon: "error",
+          confirmButtonText: "Reintentar",
         });
       } else {
-        setLogro(data.logroDesbloqueado); 
+        setLogro(data.logroDesbloqueado);
         Swal.fire({
-          title: "¡Éxito!",
+          title: "Tarea subida con éxito",
           text: data.logroDesbloqueado
-            ? `Tarea subida correctamente\n¡Logro desbloqueado: ${data.logroDesbloqueado}!`
-            : "Tarea subida correctamente",
+            ? `¡Logro desbloqueado: ${data.logroDesbloqueado}!`
+            : "La tarea se ha subido correctamente.",
           icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          navigate(`/Grupos/${idUsuario}/${idGrupo}`);
         });
-        navigate(`/Grupos/${idUsuario}/${idGrupo}`);
       }
     } catch (error) {
       Swal.fire({
         title: "Error",
         text: "Error al subir la tarea.",
         icon: "error",
+        confirmButtonText: "Reintentar",
       });
     } finally {
       setCargando(false);
@@ -121,6 +130,7 @@ const SubirTarea = () => {
           </ul>
         </nav>
       </div>
+
       <main id="main">
         <div className="fondo-subir">
           <div className="contenedor-subir">

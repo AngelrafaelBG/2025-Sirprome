@@ -1,0 +1,103 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+/* Título */
+.Sub-titulo {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+/* Lista de tareas */
+.tareas.listas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo de cada tarea */
+.tarea-item {
+  background: #f8f9fa;
+  border-left: 4px solid #3498db;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 15px; /* Bordes más redondeados */
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%; /* Se extiende completamente */
+  box-sizing: border-box; /* Incluye padding y border en el ancho */
+}
+
+.tarea-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título de la tarea */
+.tarea-item h5 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Detalles de la tarea */
+.tarea-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.tarea-item p b {
+  color: #2c3e50;
+}
+
+/* Estilo para el botón Calificar */
+.boton-criterios {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #3498db; /* Azul cielo */
+  color: white;
+  border: none;
+  padding: 8px 15px; /* Botón más pequeño */
+  margin-top: 10px;
+  border-radius: 15px; /* Bordes más redondeados */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px; /* Tamaño de texto más pequeño */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: auto; /* Botón ajusta su tamaño al contenido */
+}
+
+.boton-criterios:hover {
+  background: #5dade2; /* Azul más oscuro al pasar el cursor */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.boton-criterios:active {
+  transform: translateY(0);
+}
+
+/* Imagen dentro del botón */
+.imagen-subir {
+  width: 14px; /* Imagen más pequeña */
+  height: 14px;
+  margin-left: 8px;
+  filter: brightness(0) invert(1);
+}
+
+/* Mensaje cuando no hay tareas */
+.mensaje-vacio {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}

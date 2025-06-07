@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Logo from "../../assets/Logo.jpg";
-
 
 const ActualizarRol = () => {
   const { idUsuario } = useParams();
@@ -11,8 +11,12 @@ const ActualizarRol = () => {
 
   useEffect(() => {
     if (!idUsuario || idUsuario.length !== 36) { 
-      alert("Acceso inválido");
-      navigate("/");
+      Swal.fire({
+        title: "Acceso inválido",
+        text: "El ID de usuario no es válido.",
+        icon: "error",
+        confirmButtonText: "Entendido",
+      }).then(() => navigate("/"));
     }
   }, [idUsuario, navigate]);
 
@@ -20,7 +24,12 @@ const ActualizarRol = () => {
     setCarga(true);
 
     if (!rol.trim() || (rol.toLowerCase() !== "estudiante" && rol.toLowerCase() !== "profesor")) {
-      alert("El rol debe ser 'estudiante' o 'profesor'");
+      Swal.fire({
+        title: "Rol inválido",
+        text: "El rol debe ser 'estudiante' o 'profesor'.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
       setCarga(false);
       return;
     }
@@ -36,19 +45,35 @@ const ActualizarRol = () => {
       });
 
       if (response.ok) {
-        alert("Rol actualizado con éxito");
-        if (rol.toLowerCase() === "estudiante") {
-          navigate("/VerGrupos/"+idUsuario);
-        } else if (rol.toLowerCase() === "profesor") {
-          navigate("/MisGrupos/"+idUsuario);
-        }
+        Swal.fire({
+          title: "Rol actualizado con éxito",
+          text: `Logro desbloqueado. Un nuevo comienso`,
+          icon: "success",
+          confirmButtonText: "Continuar",
+        }).then(() => {
+          if (rol.toLowerCase() === "estudiante") {
+            navigate(`/VerGrupos/${idUsuario}`);
+          } else if (rol.toLowerCase() === "profesor") {
+            navigate(`/MisGrupos/${idUsuario}`);
+          }
+        });
       } else {
         const error = await response.json();
-        alert(error.message || "Error al actualizar el rol");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Error al actualizar el rol.",
+          icon: "error",
+          confirmButtonText: "Reintentar",
+        });
       }
     } catch (error) {
       console.error("Error: ", error);
-      alert("Error al conectar con el servidor");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonText: "Reintentar",
+      });
     } finally {
       setCarga(false);
     }
@@ -57,7 +82,7 @@ const ActualizarRol = () => {
   return (
     <div className="fondo-rol">
       <div className="contenedor-rol">
-      <img src={Logo} className="Logo"/>
+        <img src={Logo} className="Logo" alt="Logo" />
         <h4>Actualizar Rol</h4>
 
         <div>Nuevo Rol</div>

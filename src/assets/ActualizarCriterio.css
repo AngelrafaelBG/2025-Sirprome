@@ -102,3 +102,28 @@
     transform: translateY(0);
   }
 }
+
+/* Variables de color */
+:root {
+  --background-color: #f4f8fb;
+  --text-color: #2c3e50;
+  --primary-color: #3498db;
+  --hover-color: #2980b9;
+  --border-color: #ccd6dd;
+}
+
+/* Estilos globales */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}

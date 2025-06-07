@@ -13,11 +13,17 @@
   --spacing-sm: 5px;
   --spacing-md: 10px;
   --spacing-lg: 15px;
+  --background-color: #f8f9fa;
+  --text-color: #212529;
+  --border-color: #ced4da;
+  --hover-color: #007bff;
 }
 
 /* Estilos base */
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* Estilos reutilizables */
@@ -205,4 +211,14 @@ body {
 .Icono_Tarea,
 .Icono_Info {
   composes: icon;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+button:hover {
+  background-color: var(--hover-color);
 }

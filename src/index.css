@@ -6,13 +6,23 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
+  background: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Cambia a flex-start para que crezca hacia abajo */
+  min-height: 100vh;
+  width: 100%;
+  padding: 1rem 0;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0)
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -24,8 +34,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  display: block; /* Cambia de flex a block */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -34,7 +43,16 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
+input{
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  border: 1px solid 0,0,0,0;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.959);
+  transition: border-color 0.25s, box-shadow 0.25s;
+  background-color: rgb(255, 255, 255);
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;

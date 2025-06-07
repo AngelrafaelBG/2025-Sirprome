@@ -6,7 +6,7 @@ import "../../assets/infoGrupos.css";
 interface Miembro {
   IdUsuario: string;
   Nombre: string;
-  Rol:string
+  Rol: string;
   Correo: string;
 }
 
@@ -15,9 +15,9 @@ interface Grupo {
   Codigo?: string;
   Imagen: string;
   Miembros: number;
-  Rol: string; 
+  Rol: string;
   MiembrosDatos: Miembro[];
-  IdCriterio?: string; 
+  IdCriterio?: string;
 }
 
 const InfoGrupo = () => {
@@ -26,6 +26,7 @@ const InfoGrupo = () => {
   const [grupo, setGrupo] = useState<Grupo | null>(null);
   const [carga, setCarga] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [busqueda, setBusqueda] = useState<string>("");
 
   useEffect(() => {
     const fetchGrupoData = async () => {
@@ -57,7 +58,6 @@ const InfoGrupo = () => {
 
     fetchGrupoData();
   }, [idUsuario, idGrupo]);
-
 
   const eliminarMiembro = async (idMiembro: string) => {
     if (!idUsuario || !idGrupo) {
@@ -95,27 +95,6 @@ const InfoGrupo = () => {
       setCarga(false);
     }
   };
-  useEffect(() => {
-    const menu = document.getElementById("menu");
-    const barra = document.getElementById("barra");
-    const main = document.getElementById("main");
-
-    const toggleMenu = () => {
-      barra!.classList.toggle('menu-contraer');
-      menu!.classList.toggle('menu-toggle');
-      main!.classList.toggle('menu-contraer');
-    };
-
-    if (menu) {
-      menu.addEventListener("click", toggleMenu);
-    }
-
-    return () => {
-      if (menu) {
-        menu.removeEventListener("click", toggleMenu);
-      }
-    };
-  }, []);
 
   const MiembrosList = ({
     miembros,
@@ -125,62 +104,70 @@ const InfoGrupo = () => {
     miembros: Miembro[];
     onEliminar: (idMiembro: string) => void;
     rol: string;
-  }) => (
-    <ul>
-      {miembros.length > 0 ? (
-        miembros.map((miembro, index) => (
-          <li key={index} className="miembro-item">
-            <p><b>Nombre:</b> {miembro.Nombre}</p>
-            <p><b>Correo:</b> {miembro.Correo}</p>
-            {rol === "estudiante" && (
-              <button
-                onClick={() => navigate(`/CriterioAlumno/${idUsuario}/${idGrupo}`)}
-                className="btn btn-secondary"
-              >
-                Ver Criterios
-              </button>
-            )}
-            {rol === "profesor" && miembro.IdUsuario && (
-              <>
+  }) => {
+    const miembrosFiltrados = miembros.filter((miembro) =>
+      miembro.Nombre.toLowerCase().includes(busqueda.toLowerCase())
+    );
+
+    return (
+      <ul>
+        {miembrosFiltrados.length > 0 ? (
+          miembrosFiltrados.map((miembro, index) => (
+            <li key={index} className="miembro-item">
+              <p>
+                <b>Nombre:</b> {miembro.Nombre}
+              </p>
+              <p>
+                <b>Correo:</b> {miembro.Correo}
+              </p>
+              {rol === "estudiante" && (
                 <button
-                  onClick={() => onEliminar(miembro.IdUsuario)}
-                  className="Boton_EliminarCriterio_Detalles"
+                  onClick={() => navigate(`/CriterioAlumno/${idUsuario}/${idGrupo}`)}
+                  className="btn btn-secondary"
                 >
-                  Eliminar
+                  Ver Criterios
                 </button>
-                <button
-                  onClick={() =>
-                    navigate(`/CalificarCriterio/${idUsuario}/${idGrupo}/${grupo?.IdCriterio}/${miembro.IdUsuario}`)
-                  }
-                  className="Calificar_Criterio_Detalle"
-                >
-                  Calificar Criterio
-                </button>
-              </>
-            )}
-          </li>
-        ))
-      ) : (
-        <p>No hay miembros en este grupo.</p>
-      )}
-    </ul>
-  );
+              )}
+              {rol === "profesor" && miembro.IdUsuario && (
+                <>
+                  <button
+                    onClick={() => onEliminar(miembro.IdUsuario)}
+                    className="Boton_EliminarCriterio_Detalles"
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/CalificarCriterio/${idUsuario}/${idGrupo}/${grupo?.IdCriterio}/${miembro.IdUsuario}`)
+                    }
+                    className="Calificar_Criterio_Detalle"
+                  >
+                    Calificar Criterio
+                  </button>
+                </>
+              )}
+            </li>
+          ))
+        ) : (
+          <p>No hay miembros que coincidan con la búsqueda.</p>
+        )}
+      </ul>
+    );
+  };
 
   return (
     <>
-    <header>
+      <header>
         <div className="izq">
           <div className="menu-conteiner">
             <div className="menu" id="menu">
-            <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
+              <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
             </div>
           </div>
           <div className="brand">
-            
             <span className="uno">Sirprome</span>
           </div>
         </div>
-        
       </header>
       <div className="barra-lateral" id="barra">
         <nav>
@@ -192,19 +179,19 @@ const InfoGrupo = () => {
               </a>
             </li>
             <li>
-              <a onClick={() => navigate(`/InsertarCriterio/${idUsuario}/${idGrupo}/${grupo?.IdCriterio}`)} >
+              <a onClick={() => navigate(`/InsertarCriterio/${idUsuario}/${idGrupo}/${grupo?.IdCriterio}`)}>
                 <img src="/Iconos/Icono-Insertar.svg" alt="" />
                 <span>Insertar Criterio</span>
               </a>
             </li>
             <li>
-              <a onClick={() => navigate(`/CriterioGrupo/${idUsuario}/${idGrupo}`)} >
+              <a onClick={() => navigate(`/CriterioGrupo/${idUsuario}/${idGrupo}`)}>
                 <img src="/Iconos/Icono-Ver.svg" alt="" />
                 <span>Ver Criterio</span>
               </a>
             </li>
             <li>
-              <a onClick={() => navigate(`/MisGrupos/${idUsuario}`)} >
+              <a onClick={() => navigate(`/MisGrupos/${idUsuario}`)}>
                 <img src="/Iconos/Icono-Volver.svg" alt="" />
                 <span>Volver</span>
               </a>
@@ -219,84 +206,72 @@ const InfoGrupo = () => {
         </nav>
       </div>
       <main id="main">
+        <div className="info-grupo-container">
+          <h2 className="titulo-grupo">Información del Grupo</h2>
+          <hr className="linea-decorativa" />
 
-      <div className="info-grupo-container">
-  <h2 className="titulo-grupo">Información del Grupo</h2>
-  <hr className="linea-decorativa" />
-
-  {carga && (
-    <div className="carga-container">
-      <div className="spinner"></div>
-      <p>Cargando información del grupo...</p>
-    </div>
-  )}
-  {error && <p className="error">{error}</p>}
-
-  {grupo ? (
-    <>
-      <h3 className="subtitulo-grupo">{grupo.Nombre}</h3>
-      <div className="contenido-principal">
-        <div className="contenedor-izquierda animar-entrada">
-          <div className="imagen-contenedor">
-            <img
-              className="imagen-grupo"
-              src={grupo.Imagen}
-              alt={`Imagen del grupo ${grupo.Nombre}`}
-            />
-          </div>
-          <div className="datos-grupo">
-            {grupo.Codigo && (
-              <p>
-                <span className="etiqueta">Código:</span>
-                <span className="valor">{grupo.Codigo}</span>
-              </p>
-            )}
-            <p>
-              <span className="etiqueta">Miembros:</span>
-              <span className="valor">{grupo.Miembros}</span>
-            </p>
-            <p>
-              <span className="etiqueta">Rol:</span>
-              <span className="valor rol">{grupo.Rol}</span>
-            </p>
-          </div>
-
-          {grupo.IdCriterio && (
-            <div className="botones-criterios">
-              <button
-                onClick={() => navigate(`/InsertarCriterio/${idUsuario}/${idGrupo}/${grupo.IdCriterio}`)}
-                className="btn-criterio btn-insertar"
-              >
-                <i className="fas fa-plus-circle"></i> Insertar Criterio
-              </button>
-              <button
-                onClick={() => navigate(`/CriterioGrupo/${idUsuario}/${idGrupo}`)}
-                className="btn-criterio btn-ver"
-              >
-                <i className="fas fa-list-ul"></i> Ver Criterios
-              </button>
+          {carga && (
+            <div className="carga-container">
+              <div className="spinner"></div>
+              <p>Cargando información del grupo...</p>
             </div>
           )}
+          {error && <p className="error">{error}</p>}
 
-        </div>
+          {grupo ? (
+            <>
+              <h3 className="subtitulo-grupo">{grupo.Nombre}</h3>
+              <div className="contenido-principal">
+                <div className="contenedor-izquierda animar-entrada">
+                  <div className="imagen-contenedor">
+                    <img
+                      className="imagen-grupo"
+                      src={grupo.Imagen}
+                      alt={`Imagen del grupo ${grupo.Nombre}`}
+                    />
+                  </div>
+                  <div className="datos-grupo">
+                    {grupo.Codigo && (
+                      <p>
+                        <span className="etiqueta">Código:</span>
+                        <span className="valor">{grupo.Codigo}</span>
+                      </p>
+                    )}
+                    <p>
+                      <span className="etiqueta">Miembros:</span>
+                      <span className="valor">{grupo.Miembros}</span>
+                    </p>
+                    <p>
+                      <span className="etiqueta">Rol:</span>
+                      <span className="valor rol">{grupo.Rol}</span>
+                    </p>
+                  </div>
+                </div>
 
-        <div className="contenedor-derecha">
-          <h4>
-            <i className="fas fa-users"></i> Miembros del Grupo
-          </h4>
-          <MiembrosList miembros={grupo.MiembrosDatos} onEliminar={eliminarMiembro} rol={grupo.Rol} />
+                <div className="contenedor-derecha">
+                  <h4>
+                    <i className="fas fa-users"></i> Miembros del Grupo
+                  </h4>
+                  <input
+                    type="text"
+                    placeholder="Buscar miembro por nombre..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    className="barra-busqueda"
+                  />
+                  <MiembrosList miembros={grupo.MiembrosDatos} onEliminar={eliminarMiembro} rol={grupo.Rol} />
+                </div>
+              </div>
+            </>
+          ) : (
+            !carga && (
+              <div className="sin-info">
+                <i className="fas fa-info-circle"></i>
+                <p>No se ha encontrado información del grupo.</p>
+              </div>
+            )
+          )}
         </div>
-      </div>
-    </>
-  ) : (
-    !carga && (
-      <div className="sin-info">
-        <i className="fas fa-info-circle"></i>
-        <p>No se ha encontrado información del grupo.</p>
-      </div>
-    )
-  )}
-      </div>
       </main>
     </>
   );

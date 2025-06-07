@@ -1,6 +1,6 @@
 .contenedor-ver {
   width: min(100% - 2rem, 1200px);
-  margin: 0 auto;
+  margin: 1rem auto 0; /* Reduce el margen superior */
   padding: clamp(1rem, 3vw, 2rem);
   background: var(--white);
   border-radius: var(--border-radius);
@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   overflow: visible;
+  margin-top: 1rem; /* Reduce el espacio entre el contenedor y la barra lateral */
 }
 
 .contenedor-ver h4 {
@@ -18,6 +19,8 @@
   padding-bottom: 1rem;
   border-bottom: 2px solid #f0f2f5;
   position: relative;
+  margin-top: 0; /* Elimina el margen superior del título */
+  padding-top: 0.5rem; /* Reduce el padding superior del título */
 }
 
 .contenedor-ver h4::after {
@@ -51,15 +54,36 @@
 
 /* Lista de grupos */
 .Contenedor_Imagen_MisGrupos {
-  display: grid;
-  grid-template-columns: repeat(3, 2fr); 
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 0;
   margin: 0;
   list-style: none;
+  justify-content: center;
 }
 
 /* Tarjeta de grupo */
+.Contenedor_Grupos_IdGrupo {
+  flex: 1 1 calc(33.333% - 2rem); /* 3 por fila, considerando el gap */
+  max-width: calc(33.333% - 2rem);
+  min-width: 280px;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.Contenedor_Grupos_IdGrupo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
 .Contenedor_Grupos_IdGrupo img {
   width: clamp(150px, 80%, 200px);
   height: auto; 
@@ -198,5 +222,19 @@
   .Boton_Ver_Detalle,
   .Boton_Criterio_Grupo {
     width: 100%;
+  }
+}
+
+/* Responsive para tablet y móvil */
+@media (max-width: 1024px) {
+  .Contenedor_Grupos_IdGrupo {
+    flex: 1 1 calc(50% - 2rem);
+    max-width: calc(50% - 2rem);
+  }
+}
+@media (max-width: 700px) {
+  .Contenedor_Grupos_IdGrupo {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

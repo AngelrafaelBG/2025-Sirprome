@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "../../assets/TareaAlumnos.css";
 
 interface Tarea {
   Id: string;
@@ -8,12 +9,7 @@ interface Tarea {
   Titulo: string;
   Descripcion: string;
   ValorMaximo: number;
-  Calificacion: number;
-}
-
-interface Grupo {
-  Nombre: string;
-  Imagen: string;
+  Calificacion: number | string;
 }
 
 const TareaAlumnos = () => {
@@ -24,7 +20,6 @@ const TareaAlumnos = () => {
   }>();
   const navigate = useNavigate();
   const [tareas, setTareas] = useState<Tarea[]>([]);
-  const [grupo, setGrupo] = useState<Grupo | null>(null);
   const [carga, setCarga] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +33,6 @@ const TareaAlumnos = () => {
         const response = await fetch(url, { method: "GET" });
         if (response.ok) {
           const data = await response.json();
-          setGrupo({ Nombre: data[0]?.Grupo || "Grupo Desconocido", Imagen: "ruta/a/imagen" });
           setTareas(data);
         } else {
           const errorData = await response.json();
@@ -54,101 +48,59 @@ const TareaAlumnos = () => {
 
     fetchTareas();
   }, [idProfesor, idGrupo, idTarea]);
-  useEffect(() => {
-    const menu = document.getElementById("menu");
-    const barra = document.getElementById("barra");
-    const main = document.getElementById("main");
-
-    const toggleMenu = () => {
-      barra!.classList.toggle('menu-contraer');
-      menu!.classList.toggle('menu-toggle');
-      main!.classList.toggle('menu-contraer');
-    };
-
-    if (menu) {
-      menu.addEventListener("click", toggleMenu);
-    }
-
-    return () => {
-      if (menu) {
-        menu.removeEventListener("click", toggleMenu);
-      }
-    };
-  }, []);
-
 
   return (
-    <>
-    <header>
-        <div className="izq">
-          <div className="menu-conteiner">
-            <div className="menu" id="menu">
-            <img src="/Iconos/Icono-Menu.svg" alt="icon-udemy" className="logo" />
-            </div>
-          </div>
-          <div className="brand">
-            
-            <span className="uno">Sirprome</span>
-          </div>
-        </div>
-        
-      </header>
-      <div className="barra-lateral" id="barra">
-        <nav>
-          <ul>
-          <li>
-              <a onClick={() => navigate(`/Grupos/${idProfesor}/${idGrupo}`)} className="Buscar">
-                <img src="/Iconos/Icono-Contenedores.svg" alt="" />
-                <span>Tareas</span>
-              </a>
-            </li>
-            <li>
-              <a onClick={() => navigate(`/Grupos/${idProfesor}/${idGrupo}`)} >
-                <img src="/Iconos/Icono-Volver.svg" alt="" />
-                <span>Volver</span>
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                <img src="/Iconos/Icono-EliminarUsuario.svg" alt="" />
-                <span>Cerrar Sesion</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <main id="main">
-    <div>
-      {tareas.length > 0 ? (
-        <div>
-          <h4 className="Sub-titulo">Lista de Tareas</h4>
-          <ul className="tareas listas">
-            {tareas.map((tarea) => (
-              <li key={tarea.Id} className="tarea-item">
-                <h5>{tarea.Titulo}</h5>
-                <p><b>Miembro:</b> {tarea.Miembro}</p>
-                <p><b>Descripción:</b> {tarea.Descripcion}</p>
-                <p><b>Valor Máximo:</b> {tarea.ValorMaximo}</p>
-                <p><b>Calificación:</b> {tarea.Calificacion}</p>
-                <button
-                  onClick={() =>
-                    navigate(`/CalificarTarea/${idProfesor}/${idGrupo}/${idTarea}/${tarea.IdMiembro}`)
-                    
-                  }
-                  className="boton-criterios boton-subir"
+    <main id="main">
+      <div>
+        {carga && <p className="mensaje-vacio">Cargando tareas...</p>}
+        {error && <p className="mensaje-vacio">{error}</p>}
+        {tareas.length > 0 ? (
+          <div>
+            <h4 className="Sub-titulo">Lista de Tareas</h4>
+            <ul className="tareas listas">
+              {tareas.map((tarea) => (
+                <li key={tarea.Id} className="tarea-item">
+                  <h5>{tarea.Titulo}</h5>
+                  <p>
+                    <b>Miembro:</b> {tarea.Miembro}
+                  </p>
+                  <p>
+                    <b>Descripción:</b> {tarea.Descripcion}
+                  </p>
+                  <p>
+                    <b>Valor Máximo:</b> {tarea.ValorMaximo} puntos
+                  </p>
+                  <p>
+                    <b>Calificación:</b> {tarea.Calificacion || "Pendiente"}
+                  </p>
+                  <button
+                    className="boton-criterios"
+                    onClick={() =>
+                      navigate(
+                        `/CalificarTarea/${idProfesor}/${idGrupo}/${idTarea}/${tarea.IdMiembro}`
+                      )
+                    }
                   >
-                  Calificar<img src="/Iconos/Icono-Enviar.svg" className="imagen-subir"></img>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        !carga && <p>No se encontraron tareas asignadas.</p>
-      )}
-    </div>
+                    Calificar
+                    <img
+                      src="/Iconos/Icono-Enviar.svg"
+                      alt="Calificar"
+                      className="imagen-subir"
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          !carga && (
+            <p className="mensaje-vacio">
+              No se encontraron tareas asignadas.
+            </p>
+          )
+        )}
+      </div>
     </main>
-    </>
   );
 };
 
