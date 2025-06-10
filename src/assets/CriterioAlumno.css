@@ -278,6 +278,7 @@ button:hover {
 
 .contenedor-alumno {
   animation: slideIn 0.6s ease-in-out;
+  padding: 20px;
 }
 
 /* Hover para los botones */

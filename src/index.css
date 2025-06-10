@@ -84,3 +84,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.swal2-warning-icon-custom .swal2-icon-content {
+  color: #FFA726 !important;
+}

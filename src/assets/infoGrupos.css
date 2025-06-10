@@ -587,6 +587,7 @@
 
 .info-grupo {
   animation: fadeInLeft 0.7s ease-in-out;
+  padding: 15px;
 }
 
 body {

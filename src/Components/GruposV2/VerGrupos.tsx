@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GoChecklist } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 import "../../assets/verGrupos.css";
 import "../../assets/ModoOscuro.css";
@@ -69,10 +70,22 @@ const VerGrupos = () => {
   }, []);
 
   const onEliminarUsuario = async () => {
-    const confirmacion = window.confirm(`¿Está seguro de que desea eliminar el usuario con ID ${idUsuario}?`);
-    if (!confirmacion) {
-      return;
-    }
+    const result = await Swal.fire({
+      title: '¿Seguro que quieres eliminar tu cuenta?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      iconColor: '#FFA726',
+      showCancelButton: true,
+      confirmButtonColor: '#4b6cb7',
+      cancelButtonColor: '#FFA726',
+      confirmButtonText: 'Sí, eliminar cuenta',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        icon: 'swal2-warning-icon-custom'
+      }
+    });
+
+    if (!result.isConfirmed) return;
 
     setCarga(true);
 
@@ -84,15 +97,31 @@ const VerGrupos = () => {
       });
 
       if (response.ok) {
-        alert("Usuario eliminado con éxito");
+        await Swal.fire({
+          title: "Cuenta eliminada",
+          text: "Tu cuenta ha sido eliminada exitosamente.",
+          icon: "success",
+          confirmButtonColor: "#4b6cb7",
+          confirmButtonText: "Aceptar"
+        });
         navigate("/");
       } else {
         const error = await response.json();
-        alert(error.message || "Error al eliminar el usuario");
+        Swal.fire({
+          title: "Error",
+          text: error.message || "Error al eliminar el usuario",
+          icon: "error",
+          confirmButtonColor: "#4b6cb7"
+        });
       }
     } catch (error) {
       console.error("Error: ", error);
-      alert("Error al conectar con el servidor");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonColor: "#4b6cb7"
+      });
     } finally {
       setCarga(false);
     }
@@ -161,7 +190,7 @@ const VerGrupos = () => {
               <img
                 src={grupo.Imagen}
                 alt={grupo.Grupo}
-                style={{ width: "160px", height: "150px" }}
+                style={{ width: "160px", height: "150px", objectFit: "cover", borderRadius: "20%" }}
               />
               <div className="contenido-grupo">
                 <p className="Miembros_MisGrupos">

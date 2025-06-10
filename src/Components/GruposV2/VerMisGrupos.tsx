@@ -4,6 +4,7 @@ import { GoChecklist } from "react-icons/go";
 import { FaEdit } from "react-icons/fa";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 import "../../assets/Barra_Lateral.css";
 
 interface Grupo {
@@ -106,10 +107,22 @@ const VerMisGrupos = () => {
   };
 
   const onEliminarUsuario = async () => {
-    const confirmacion = window.confirm(
-      `¿Está seguro de que desea eliminar el usuario con ID ${idProfesor}?`
-    );
-    if (!confirmacion) return;
+    const result = await Swal.fire({
+      title: '¿Seguro que quieres eliminar tu cuenta?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      iconColor: '#FFA726',
+      showCancelButton: true,
+      confirmButtonColor: '#4b6cb7',
+      cancelButtonColor: '#FFA726',
+      confirmButtonText: 'Sí, eliminar cuenta',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        icon: 'swal2-warning-icon-custom'
+      }
+    });
+
+    if (!result.isConfirmed) return;
 
     setCarga(true);
 
@@ -124,15 +137,30 @@ const VerMisGrupos = () => {
       });
 
       if (response.ok) {
-        alert("Usuario eliminado con éxito");
+        await Swal.fire({
+          title: "Cuenta eliminada",
+          text: "Tu cuenta ha sido eliminada exitosamente.",
+          icon: "success",
+          confirmButtonColor: "#4b6cb7",
+          confirmButtonText: "Aceptar"
+        });
         navigate("/");
       } else {
         const errorData = await response.json().catch(() => null);
-        alert(errorData?.message || "Error al eliminar el usuario");
+        Swal.fire({
+          title: "Error",
+          text: errorData?.message || "Error al eliminar el usuario",
+          icon: "error",
+          confirmButtonColor: "#4b6cb7"
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("Error al conectar con el servidor");
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor.",
+        icon: "error",
+        confirmButtonColor: "#4b6cb7"
+      });
     } finally {
       setCarga(false);
     }
@@ -170,7 +198,27 @@ const VerMisGrupos = () => {
               </a>
             </li>
             <li>
-              <a href="/">
+              <a
+                onClick={async () => {
+                  const result = await Swal.fire({
+                    title: '¿Seguro que quieres cerrar sesión?',
+                    icon: 'warning',
+                    iconColor: '#FFA726',
+                    showCancelButton: true,
+                    confirmButtonColor: '#4b6cb7',
+                    cancelButtonColor: '#FFA726',
+                    confirmButtonText: 'Sí, cerrar sesión',
+                    cancelButtonText: 'Cancelar',
+                    customClass: {
+                      icon: 'swal2-warning-icon-custom'
+                    }
+                  });
+                  if (result.isConfirmed) {
+                    navigate("/");
+                  }
+                }}
+                style={{ cursor: "pointer" }}
+              >
                 <img src="/Iconos/Icono-Volver.svg" alt="" />
                 <span>Cerrar Sesion</span>
               </a>

@@ -365,3 +365,9 @@ button {
 button:hover {
   background-color: var(--hover-color);
 }
+.mensaje-sin-tareas {
+  text-align: center;
+  color: #7a7979;
+  font-size: 1.1rem;
+  padding: 2rem 0;
+}

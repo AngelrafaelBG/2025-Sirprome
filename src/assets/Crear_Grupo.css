@@ -51,13 +51,15 @@ body {
   font-weight: 600;
   color: var(--text-color);
   font-size: 20px;
-  padding : 4%
+}
+.bienvenida-texto{
+  padding: 10px;
 }
 
 /* Inputs corregidos para no desbordar */
 .form-group input[type="text"],
 .form-group input[type="url"] {
-  width: calc(100% - 30px); /* Aseguramos espacio para el padding */
+  width: calc(100% 30px); /* Aseguramos espacio para el padding */
   padding: 12px 15px;
   border: 1px solid var(--border-color);
   border-radius: 6px;

@@ -160,55 +160,61 @@ const Grupo = () => {
       <div className="lado-derecho animado fade-in">
         <h6 className="sub-titulo">Tareas:</h6>
         <div className="tasks-grid">
-          {grupo.Tareas.map((tarea) => (
-            <div key={tarea.IdTarea} className="task-card slide-in-bottom">
-              <div className="task-header">
-                <h3>{tarea.Titulo}</h3>
-                <div className="task-points">{tarea.ValorMax} pts</div>
-              </div>
-              <p className="task-description">{tarea.Descripcion}</p>
-
-              {grupo.Rol === "estudiante" && (
-                <>
-                  <p><b>Calificación:</b> {tarea.Calificacion ?? "Sin calificar"}</p>
-                  <p><b>Evidencia:</b> {tarea.Evidencia ?? "No enviada"}</p>
-                  <button
-                    onClick={() =>
-                      navigate(`/SubirTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
-                    }
-                    className="boton-subir"
-                  >
-                    Subir Evidencia
-                    <img src="/Iconos/Icono-CrearContenido.svg" className="imagen-subir" />
-                  </button>
-                </>
-              )}
-
-              {grupo.Rol === "profesor" && (
-                <div className="acciones-tarea">
-                  <button
-                    onClick={() =>
-                      navigate(`/ActualizarTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
-                    }
-                    className="boton boton-actualizar"
-                  >
-                    <img src="/Iconos/Icono-Insertar.svg" alt="Actualizar" />
-                    Actualizar Tarea
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      navigate(`/TareaAlumnos/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
-                    }
-                    className="boton boton-ver"
-                  >
-                    <img src="/Iconos/Icono-Ver.svg" alt="Ver" />
-                    Ver Tarea
-                  </button>
-                </div>
-              )}
+          {grupo.Tareas.length === 0 ? (
+            <div className="mensaje-sin-tareas">
+              <p>No hay tareas registradas en este grupo.</p>
             </div>
-          ))}
+          ) : (
+            grupo.Tareas.map((tarea) => (
+              <div key={tarea.IdTarea} className="task-card slide-in-bottom">
+                <div className="task-header">
+                  <h3>{tarea.Titulo}</h3>
+                  <div className="task-points">{tarea.ValorMax} pts</div>
+                </div>
+                <p className="task-description">{tarea.Descripcion}</p>
+
+                {grupo.Rol === "estudiante" && (
+                  <>
+                    <p><b>Calificación:</b> {tarea.Calificacion ?? "Sin calificar"}</p>
+                    <p><b>Evidencia:</b> {tarea.Evidencia ?? "No enviada"}</p>
+                    <button
+                      onClick={() =>
+                        navigate(`/SubirTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
+                      }
+                      className="boton-subir"
+                    >
+                      Subir Evidencia
+                      <img src="/Iconos/Icono-CrearContenido.svg" className="imagen-subir" />
+                    </button>
+                  </>
+                )}
+
+                {grupo.Rol === "profesor" && (
+                  <div className="acciones-tarea">
+                    <button
+                      onClick={() =>
+                        navigate(`/ActualizarTarea/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
+                      }
+                      className="boton boton-actualizar"
+                    >
+                      <img src="/Iconos/Icono-Insertar.svg" alt="Actualizar" />
+                      Actualizar Tarea
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        navigate(`/TareaAlumnos/${idUsuario}/${idGrupo}/${tarea.IdTarea}`)
+                      }
+                      className="boton boton-ver"
+                    >
+                      <img src="/Iconos/Icono-Ver.svg" alt="Ver" />
+                      Ver Tarea
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
